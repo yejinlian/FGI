@@ -3216,7 +3216,7 @@
 				supplier   	@139
 				vertices   	(list Points
 				    (268, 624)
-				    (629, 251))
+				    (658, 219))
 				line_style 	0)
 			    (object DependencyView "" @145
 				stereotype 	TRUE
@@ -3226,7 +3226,7 @@
 				supplier   	@140
 				vertices   	(list Points
 				    (268, 656)
-				    (517, 525))
+				    (692, 429))
 				line_style 	0)
 			    (object DependencyView "" @146
 				stereotype 	TRUE
@@ -3255,7 +3255,7 @@
 				client     	@138
 				supplier   	@143
 				vertices   	(list Points
-				    (268, 740)
+				    (347, 812)
 				    (727, 1157))
 				line_style 	0)))))
 	    (object Class_Category "算子维护"
@@ -7646,7 +7646,7 @@
 					    location   	(703, 250)
 					    anchor_loc 	1
 					    nlines     	2
-					    max_width  	471
+					    max_width  	425
 					    justify    	0
 					    label      	"")
 					icon       	"control"
@@ -7654,7 +7654,7 @@
 					line_color 	3342489
 					fill_color 	13434879
 					quidu      	"5C63D7320126"
-					width      	157
+					width      	436
 					height     	1127
 					icon_height 	164
 					icon_width 	157
@@ -8065,14 +8065,14 @@
 						supplier   	"$UNNAMED$39"
 						quidu      	"5C63D79602D7"
 						messages   	(list Messages
-						    (object Message "getAlgorithmRuleById( )"
+						    (object Message "getAlgorithmRoleById( )"
 							quid       	"5C63D79C0187"
 							frequency  	"Aperiodic"
 							synchronization 	"Simple"
 							dir        	"FromClientToSupplier"
 							sequence   	"1"
 							ordinal    	0
-							quidu      	"000000000000"
+							quidu      	"5C63D79E00C7"
 							creation   	FALSE)
 						    (object Message ""
 							quid       	"5C63D7B80002"
@@ -8137,14 +8137,14 @@
 						supplier   	"$UNNAMED$41"
 						quidu      	"5C63D7980322"
 						messages   	(list Messages
-						    (object Message "getAlgorithmRuleById( )"
+						    (object Message "getAlgorithmRoleById( )"
 							quid       	"5C63D7A8023E"
 							frequency  	"Aperiodic"
 							synchronization 	"Simple"
 							dir        	"FromClientToSupplier"
 							sequence   	"1.1"
 							ordinal    	1
-							quidu      	"000000000000"
+							quidu      	"5C63D7AA0160"
 							creation   	FALSE)
 						    (object Message ""
 							quid       	"5C63D7B500F1"
@@ -8155,14 +8155,14 @@
 							ordinal    	2
 							quidu      	"000000000000"
 							creation   	FALSE)
-						    (object Message "modAlgorithmRuleById( )"
+						    (object Message "modAlgorithmRoleById( )"
 							quid       	"5C63D7C40387"
 							frequency  	"Aperiodic"
 							synchronization 	"Simple"
 							dir        	"FromClientToSupplier"
 							sequence   	"3.1"
 							ordinal    	9
-							quidu      	"000000000000"
+							quidu      	"5C63D7C6026B"
 							creation   	FALSE)
 						    (object Message ""
 							quid       	"5C63D7CF022E"
@@ -8322,7 +8322,7 @@
 					    location   	(800, 250)
 					    anchor_loc 	1
 					    nlines     	2
-					    max_width  	471
+					    max_width  	422
 					    justify    	0
 					    label      	"")
 					icon       	"control"
@@ -8330,7 +8330,7 @@
 					line_color 	3342489
 					fill_color 	13434879
 					quidu      	"5C63D79602D7"
-					width      	157
+					width      	434
 					height     	1676
 					icon_height 	164
 					icon_width 	157
@@ -8489,7 +8489,7 @@
 					    height     	105
 					    y_coord    	15
 					    Nested     	FALSE))
-				    (object InterMessView "getAlgorithmRuleById( )" @399
+				    (object InterMessView "getAlgorithmRoleById( )" @399
 					location   	(0, 372)
 					font       	(object Font
 					    size       	10
@@ -8515,9 +8515,9 @@
 					    quidu      	"5C63D79C0187"
 					    anchor_loc 	1
 					    nlines     	1
-					    max_width  	479
+					    max_width  	488
 					    justify    	0
-					    label      	"getAlgorithmRuleById( )"
+					    label      	"getAlgorithmRoleById( )"
 					    pctDist    	0.500000
 					    height     	45
 					    orientation 	0)
@@ -8529,7 +8529,7 @@
 					origin     	(243, 372)
 					terminus   	(784, 372)
 					ordinal    	0)
-				    (object InterMessView "getAlgorithmRuleById( )" @401
+				    (object InterMessView "getAlgorithmRoleById( )" @401
 					location   	(0, 477)
 					font       	(object Font
 					    size       	10
@@ -8555,9 +8555,9 @@
 					    quidu      	"5C63D7A8023E"
 					    anchor_loc 	1
 					    nlines     	1
-					    max_width  	479
+					    max_width  	488
 					    justify    	0
-					    label      	"getAlgorithmRuleById( )"
+					    label      	"getAlgorithmRoleById( )"
 					    pctDist    	0.500000
 					    height     	45
 					    orientation 	0)
@@ -8689,7 +8689,7 @@
 					origin     	(243, 1396)
 					terminus   	(784, 1396)
 					ordinal    	8)
-				    (object InterMessView "modAlgorithmRuleById( )" @409
+				    (object InterMessView "modAlgorithmRoleById( )" @409
 					location   	(0, 1501)
 					font       	(object Font
 					    size       	10
@@ -8715,9 +8715,9 @@
 					    quidu      	"5C63D7C40387"
 					    anchor_loc 	1
 					    nlines     	1
-					    max_width  	525
+					    max_width  	522
 					    justify    	0
-					    label      	"modAlgorithmRuleById( )"
+					    label      	"modAlgorithmRoleById( )"
 					    pctDist    	0.500000
 					    height     	45
 					    orientation 	0)
@@ -8982,14 +8982,14 @@
 						supplier   	"$UNNAMED$44"
 						quidu      	"5C63D9BD02B0"
 						messages   	(list Messages
-						    (object Message "getAlgorithmRuleById( )"
+						    (object Message "getAlgorithmRoleById( )"
 							quid       	"5C63D9BD02A3"
 							frequency  	"Aperiodic"
 							synchronization 	"Simple"
 							dir        	"FromClientToSupplier"
 							sequence   	"1"
 							ordinal    	0
-							quidu      	"000000000000"
+							quidu      	"5C63D79E00C7"
 							creation   	FALSE)
 						    (object Message ""
 							quid       	"5C63D9BD02A5"
@@ -9054,14 +9054,14 @@
 						supplier   	"$UNNAMED$46"
 						quidu      	"5C63D9BD02C0"
 						messages   	(list Messages
-						    (object Message "getAlgorithmRuleById( )"
+						    (object Message "getAlgorithmRoleById( )"
 							quid       	"5C63D9BD02AE"
 							frequency  	"Aperiodic"
 							synchronization 	"Simple"
 							dir        	"FromClientToSupplier"
 							sequence   	"1.1"
 							ordinal    	1
-							quidu      	"000000000000"
+							quidu      	"5C63D7AA0160"
 							creation   	FALSE)
 						    (object Message ""
 							quid       	"5C63D9BD02B1"
@@ -9239,7 +9239,7 @@
 					    location   	(800, 250)
 					    anchor_loc 	1
 					    nlines     	2
-					    max_width  	471
+					    max_width  	435
 					    justify    	0
 					    label      	"")
 					icon       	"control"
@@ -9406,7 +9406,7 @@
 					    height     	105
 					    y_coord    	15
 					    Nested     	FALSE))
-				    (object InterMessView "getAlgorithmRuleById( )" @444
+				    (object InterMessView "getAlgorithmRoleById( )" @444
 					location   	(0, 372)
 					font       	(object Font
 					    size       	10
@@ -9419,7 +9419,7 @@
 					    default_color 	TRUE)
 					label      	(object SegLabel @445
 					    Parent_View 	@444
-					    location   	(514, 329)
+					    location   	(513, 328)
 					    font       	(object Font
 						size       	10
 						face       	"Arial"
@@ -9434,9 +9434,9 @@
 					    nlines     	1
 					    max_width  	488
 					    justify    	0
-					    label      	"getAlgorithmRuleById( )"
-					    pctDist    	0.500924
-					    height     	44
+					    label      	"getAlgorithmRoleById( )"
+					    pctDist    	0.500000
+					    height     	45
 					    orientation 	0)
 					line_color 	3342489
 					client     	@424
@@ -9446,7 +9446,7 @@
 					origin     	(243, 372)
 					terminus   	(784, 372)
 					ordinal    	0)
-				    (object InterMessView "getAlgorithmRuleById( )" @446
+				    (object InterMessView "getAlgorithmRoleById( )" @446
 					location   	(0, 477)
 					font       	(object Font
 					    size       	10
@@ -9474,7 +9474,7 @@
 					    nlines     	1
 					    max_width  	488
 					    justify    	0
-					    label      	"getAlgorithmRuleById( )"
+					    label      	"getAlgorithmRoleById( )"
 					    pctDist    	0.500000
 					    height     	45
 					    orientation 	0)
@@ -9899,14 +9899,14 @@
 						supplier   	"$UNNAMED$49"
 						quidu      	"5C63DB2A0372"
 						messages   	(list Messages
-						    (object Message "getAllAlgorithmRule( )"
+						    (object Message "getAllAlgorithmRole( )"
 							quid       	"5C63DB2A0368"
 							frequency  	"Aperiodic"
 							synchronization 	"Simple"
 							dir        	"FromClientToSupplier"
 							sequence   	"1"
 							ordinal    	0
-							quidu      	"000000000000"
+							quidu      	"5C63D76703CE"
 							creation   	FALSE)
 						    (object Message ""
 							quid       	"5C63DB2A036A"
@@ -9917,14 +9917,14 @@
 							ordinal    	3
 							quidu      	"000000000000"
 							creation   	FALSE)
-						    (object Message "readAlgorithmRuleFromFile( )"
+						    (object Message "readAlgorithmRoleFromFile( )"
 							quid       	"5C63DB2A036B"
 							frequency  	"Aperiodic"
 							synchronization 	"Simple"
 							dir        	"FromClientToSupplier"
 							sequence   	"2"
 							ordinal    	4
-							quidu      	"000000000000"
+							quidu      	"5C63DB36020B"
 							creation   	FALSE)
 						    (object Message ""
 							quid       	"5C63DB2A036D"
@@ -9948,14 +9948,14 @@
 						supplier   	"$UNNAMED$50"
 						quidu      	"5C63DB2A037F"
 						messages   	(list Messages
-						    (object Message "GetAllAlgorithmRule( )"
+						    (object Message "GetAllAlgorithmRole( )"
 							quid       	"5C63DB2A0370"
 							frequency  	"Aperiodic"
 							synchronization 	"Simple"
 							dir        	"FromClientToSupplier"
 							sequence   	"1.1"
 							ordinal    	1
-							quidu      	"000000000000"
+							quidu      	"5C63D77402DE"
 							creation   	FALSE)
 						    (object Message ""
 							quid       	"5C63DB2A0373"
@@ -9966,14 +9966,14 @@
 							ordinal    	2
 							quidu      	"000000000000"
 							creation   	FALSE)
-						    (object Message "readAlgorithmRuleFromFile( )"
+						    (object Message "readAlgorithmRoleFromFile( )"
 							quid       	"5C63DB2A0374"
 							frequency  	"Aperiodic"
 							synchronization 	"Simple"
 							dir        	"FromClientToSupplier"
 							sequence   	"2.1"
 							ordinal    	5
-							quidu      	"000000000000"
+							quidu      	"5C63DB48001A"
 							creation   	FALSE)
 						    (object Message ""
 							quid       	"5C63DB2A0376"
@@ -10081,7 +10081,7 @@
 					    location   	(703, 250)
 					    anchor_loc 	1
 					    nlines     	2
-					    max_width  	471
+					    max_width  	435
 					    justify    	0
 					    label      	"")
 					icon       	"control"
@@ -10167,7 +10167,7 @@
 					    height     	105
 					    y_coord    	15
 					    Nested     	FALSE))
-				    (object InterMessView "getAllAlgorithmRule( )" @482
+				    (object InterMessView "getAllAlgorithmRole( )" @482
 					location   	(0, 384)
 					font       	(object Font
 					    size       	10
@@ -10195,7 +10195,7 @@
 					    nlines     	1
 					    max_width  	454
 					    justify    	0
-					    label      	"getAllAlgorithmRule( )"
+					    label      	"getAllAlgorithmRole( )"
 					    pctDist    	0.500000
 					    height     	45
 					    orientation 	0)
@@ -10207,7 +10207,7 @@
 					origin     	(234, 384)
 					terminus   	(687, 384)
 					ordinal    	0)
-				    (object InterMessView "GetAllAlgorithmRule( )" @484
+				    (object InterMessView "GetAllAlgorithmRole( )" @484
 					location   	(0, 489)
 					font       	(object Font
 					    size       	10
@@ -10235,7 +10235,7 @@
 					    nlines     	1
 					    max_width  	463
 					    justify    	0
-					    label      	"GetAllAlgorithmRule( )"
+					    label      	"GetAllAlgorithmRole( )"
 					    pctDist    	0.500000
 					    height     	45
 					    orientation 	0)
@@ -10327,7 +10327,7 @@
 					origin     	(687, 699)
 					terminus   	(235, 699)
 					ordinal    	3)
-				    (object InterMessView "readAlgorithmRuleFromFile( )" @490
+				    (object InterMessView "readAlgorithmRoleFromFile( )" @490
 					location   	(0, 948)
 					font       	(object Font
 					    size       	10
@@ -10355,7 +10355,7 @@
 					    nlines     	1
 					    max_width  	588
 					    justify    	0
-					    label      	"readAlgorithmRuleFromFile( )"
+					    label      	"readAlgorithmRoleFromFile( )"
 					    pctDist    	0.500000
 					    height     	45
 					    orientation 	0)
@@ -10367,7 +10367,7 @@
 					origin     	(234, 948)
 					terminus   	(687, 948)
 					ordinal    	4)
-				    (object InterMessView "readAlgorithmRuleFromFile( )" @492
+				    (object InterMessView "readAlgorithmRoleFromFile( )" @492
 					location   	(0, 1053)
 					font       	(object Font
 					    size       	10
@@ -10395,7 +10395,7 @@
 					    nlines     	1
 					    max_width  	588
 					    justify    	0
-					    label      	"readAlgorithmRuleFromFile( )"
+					    label      	"readAlgorithmRoleFromFile( )"
 					    pctDist    	0.500000
 					    height     	45
 					    orientation 	0)
@@ -10500,14 +10500,14 @@
 						supplier   	"$UNNAMED$52"
 						quidu      	"5C63DAFC008F"
 						messages   	(list Messages
-						    (object Message "getAllAlgorithmRule( )"
+						    (object Message "getAllAlgorithmRole( )"
 							quid       	"5C63DAFC0086"
 							frequency  	"Aperiodic"
 							synchronization 	"Simple"
 							dir        	"FromClientToSupplier"
 							sequence   	"1"
 							ordinal    	0
-							quidu      	"000000000000"
+							quidu      	"5C63D76703CE"
 							creation   	FALSE)
 						    (object Message ""
 							quid       	"5C63DAFC0088"
@@ -10518,14 +10518,14 @@
 							ordinal    	3
 							quidu      	"000000000000"
 							creation   	FALSE)
-						    (object Message "saveAlgorithmRule2File( )"
+						    (object Message "saveAlgorithmRole2File( )"
 							quid       	"5C63DAFC0089"
 							frequency  	"Aperiodic"
 							synchronization 	"Simple"
 							dir        	"FromClientToSupplier"
 							sequence   	"2"
 							ordinal    	4
-							quidu      	"000000000000"
+							quidu      	"5C63DB08037D"
 							creation   	FALSE)
 						    (object Message ""
 							quid       	"5C63DAFC008A"
@@ -10549,14 +10549,14 @@
 						supplier   	"$UNNAMED$53"
 						quidu      	"5C63DAFC009C"
 						messages   	(list Messages
-						    (object Message "GetAllAlgorithmRule( )"
+						    (object Message "GetAllAlgorithmRole( )"
 							quid       	"5C63DAFC008D"
 							frequency  	"Aperiodic"
 							synchronization 	"Simple"
 							dir        	"FromClientToSupplier"
 							sequence   	"1.1"
 							ordinal    	1
-							quidu      	"000000000000"
+							quidu      	"5C63D77402DE"
 							creation   	FALSE)
 						    (object Message ""
 							quid       	"5C63DAFC0090"
@@ -10567,14 +10567,14 @@
 							ordinal    	2
 							quidu      	"000000000000"
 							creation   	FALSE)
-						    (object Message "saveAlgorithmRule2File( )"
+						    (object Message "saveAlgorithmRole2File( )"
 							quid       	"5C63DAFC0091"
 							frequency  	"Aperiodic"
 							synchronization 	"Simple"
 							dir        	"FromClientToSupplier"
 							sequence   	"2.1"
 							ordinal    	5
-							quidu      	"000000000000"
+							quidu      	"5C63DB1900D2"
 							creation   	FALSE)
 						    (object Message ""
 							quid       	"5C63DAFC0093"
@@ -10682,7 +10682,7 @@
 					    location   	(703, 250)
 					    anchor_loc 	1
 					    nlines     	2
-					    max_width  	471
+					    max_width  	435
 					    justify    	0
 					    label      	"")
 					icon       	"control"
@@ -10768,7 +10768,7 @@
 					    height     	105
 					    y_coord    	15
 					    Nested     	FALSE))
-				    (object InterMessView "getAllAlgorithmRule( )" @512
+				    (object InterMessView "getAllAlgorithmRole( )" @512
 					location   	(0, 384)
 					font       	(object Font
 					    size       	10
@@ -10796,7 +10796,7 @@
 					    nlines     	1
 					    max_width  	454
 					    justify    	0
-					    label      	"getAllAlgorithmRule( )"
+					    label      	"getAllAlgorithmRole( )"
 					    pctDist    	0.500000
 					    height     	45
 					    orientation 	0)
@@ -10808,7 +10808,7 @@
 					origin     	(234, 384)
 					terminus   	(687, 384)
 					ordinal    	0)
-				    (object InterMessView "GetAllAlgorithmRule( )" @514
+				    (object InterMessView "GetAllAlgorithmRole( )" @514
 					location   	(0, 489)
 					font       	(object Font
 					    size       	10
@@ -10821,7 +10821,7 @@
 					    default_color 	TRUE)
 					label      	(object SegLabel @515
 					    Parent_View 	@514
-					    location   	(1040, 446)
+					    location   	(1041, 445)
 					    font       	(object Font
 						size       	10
 						face       	"Arial"
@@ -10836,9 +10836,9 @@
 					    nlines     	1
 					    max_width  	463
 					    justify    	0
-					    label      	"GetAllAlgorithmRule( )"
-					    pctDist    	0.497682
-					    height     	44
+					    label      	"GetAllAlgorithmRole( )"
+					    pctDist    	0.500000
+					    height     	45
 					    orientation 	0)
 					line_color 	3342489
 					client     	@504
@@ -10928,7 +10928,7 @@
 					origin     	(687, 699)
 					terminus   	(235, 699)
 					ordinal    	3)
-				    (object InterMessView "saveAlgorithmRule2File( )" @520
+				    (object InterMessView "saveAlgorithmRole2File( )" @520
 					location   	(0, 948)
 					font       	(object Font
 					    size       	10
@@ -10956,7 +10956,7 @@
 					    nlines     	1
 					    max_width  	519
 					    justify    	0
-					    label      	"saveAlgorithmRule2File( )"
+					    label      	"saveAlgorithmRole2File( )"
 					    pctDist    	0.500000
 					    height     	45
 					    orientation 	0)
@@ -10968,7 +10968,7 @@
 					origin     	(234, 948)
 					terminus   	(687, 948)
 					ordinal    	4)
-				    (object InterMessView "saveAlgorithmRule2File( )" @522
+				    (object InterMessView "saveAlgorithmRole2File( )" @522
 					location   	(0, 1053)
 					font       	(object Font
 					    size       	10
@@ -10996,7 +10996,7 @@
 					    nlines     	1
 					    max_width  	519
 					    justify    	0
-					    label      	"saveAlgorithmRule2File( )"
+					    label      	"saveAlgorithmRole2File( )"
 					    pctDist    	0.500000
 					    height     	45
 					    orientation 	0)
@@ -11101,14 +11101,14 @@
 						supplier   	"$UNNAMED$55"
 						quidu      	"5C63D902018B"
 						messages   	(list Messages
-						    (object Message "getAlgorithmRuleById( )"
+						    (object Message "getAlgorithmRoleById( )"
 							quid       	"5C63D902017D"
 							frequency  	"Aperiodic"
 							synchronization 	"Simple"
 							dir        	"FromClientToSupplier"
 							sequence   	"1"
 							ordinal    	0
-							quidu      	"000000000000"
+							quidu      	"5C63D79E00C7"
 							creation   	FALSE)
 						    (object Message ""
 							quid       	"5C63D902017F"
@@ -11173,14 +11173,14 @@
 						supplier   	"$UNNAMED$57"
 						quidu      	"5C63D9020198"
 						messages   	(list Messages
-						    (object Message "getAlgorithmRuleById( )"
+						    (object Message "getAlgorithmRoleById( )"
 							quid       	"5C63D9020189"
 							frequency  	"Aperiodic"
 							synchronization 	"Simple"
 							dir        	"FromClientToSupplier"
 							sequence   	"1.1"
 							ordinal    	1
-							quidu      	"000000000000"
+							quidu      	"5C63D7AA0160"
 							creation   	FALSE)
 						    (object Message ""
 							quid       	"5C63D902018C"
@@ -11358,7 +11358,7 @@
 					    location   	(800, 250)
 					    anchor_loc 	1
 					    nlines     	2
-					    max_width  	471
+					    max_width  	435
 					    justify    	0
 					    label      	"")
 					icon       	"control"
@@ -11525,7 +11525,7 @@
 					    height     	105
 					    y_coord    	15
 					    Nested     	FALSE))
-				    (object InterMessView "getAlgorithmRuleById( )" @549
+				    (object InterMessView "getAlgorithmRoleById( )" @549
 					location   	(0, 372)
 					font       	(object Font
 					    size       	10
@@ -11551,9 +11551,9 @@
 					    quidu      	"5C63D902017D"
 					    anchor_loc 	1
 					    nlines     	1
-					    max_width  	479
+					    max_width  	488
 					    justify    	0
-					    label      	"getAlgorithmRuleById( )"
+					    label      	"getAlgorithmRoleById( )"
 					    pctDist    	0.500000
 					    height     	45
 					    orientation 	0)
@@ -11565,7 +11565,7 @@
 					origin     	(243, 372)
 					terminus   	(784, 372)
 					ordinal    	0)
-				    (object InterMessView "getAlgorithmRuleById( )" @551
+				    (object InterMessView "getAlgorithmRoleById( )" @551
 					location   	(0, 477)
 					font       	(object Font
 					    size       	10
@@ -11591,9 +11591,9 @@
 					    quidu      	"5C63D9020189"
 					    anchor_loc 	1
 					    nlines     	1
-					    max_width  	479
+					    max_width  	488
 					    justify    	0
-					    label      	"getAlgorithmRuleById( )"
+					    label      	"getAlgorithmRoleById( )"
 					    pctDist    	0.500000
 					    height     	45
 					    orientation 	0)
@@ -12018,14 +12018,14 @@
 						supplier   	"$UNNAMED$60"
 						quidu      	"5C63D91D0170"
 						messages   	(list Messages
-						    (object Message "getAlgorithmRuleById( )"
+						    (object Message "getAlgorithmRoleById( )"
 							quid       	"5C63D91D0162"
 							frequency  	"Aperiodic"
 							synchronization 	"Simple"
 							dir        	"FromClientToSupplier"
 							sequence   	"1"
 							ordinal    	0
-							quidu      	"000000000000"
+							quidu      	"5C63D79E00C7"
 							creation   	FALSE)
 						    (object Message ""
 							quid       	"5C63D91D0164"
@@ -12085,14 +12085,14 @@
 						supplier   	"$UNNAMED$61"
 						quidu      	"5C63D91D017D"
 						messages   	(list Messages
-						    (object Message "getAlgorithmRuleById( )"
+						    (object Message "getAlgorithmRoleById( )"
 							quid       	"5C63D91D016E"
 							frequency  	"Aperiodic"
 							synchronization 	"Simple"
 							dir        	"FromClientToSupplier"
 							sequence   	"1.1"
 							ordinal    	1
-							quidu      	"000000000000"
+							quidu      	"5C63D7AA0160"
 							creation   	FALSE)
 						    (object Message ""
 							quid       	"5C63D91D0171"
@@ -12250,7 +12250,7 @@
 					    location   	(800, 250)
 					    anchor_loc 	1
 					    nlines     	2
-					    max_width  	471
+					    max_width  	435
 					    justify    	0
 					    label      	"")
 					icon       	"control"
@@ -12357,7 +12357,7 @@
 					    height     	105
 					    y_coord    	15
 					    Nested     	FALSE))
-				    (object InterMessView "getAlgorithmRuleById( )" @592
+				    (object InterMessView "getAlgorithmRoleById( )" @592
 					location   	(0, 372)
 					font       	(object Font
 					    size       	10
@@ -12385,7 +12385,7 @@
 					    nlines     	1
 					    max_width  	488
 					    justify    	0
-					    label      	"getAlgorithmRuleById( )"
+					    label      	"getAlgorithmRoleById( )"
 					    pctDist    	0.500000
 					    height     	45
 					    orientation 	0)
@@ -12397,7 +12397,7 @@
 					origin     	(243, 372)
 					terminus   	(784, 372)
 					ordinal    	0)
-				    (object InterMessView "getAlgorithmRuleById( )" @594
+				    (object InterMessView "getAlgorithmRoleById( )" @594
 					location   	(0, 477)
 					font       	(object Font
 					    size       	10
@@ -12425,7 +12425,7 @@
 					    nlines     	1
 					    max_width  	488
 					    justify    	0
-					    label      	"getAlgorithmRuleById( )"
+					    label      	"getAlgorithmRoleById( )"
 					    pctDist    	0.500000
 					    height     	45
 					    orientation 	0)
@@ -12850,14 +12850,14 @@
 						supplier   	"$UNNAMED$63"
 						quidu      	"5C63DAAB0333"
 						messages   	(list Messages
-						    (object Message "getAllAlgorithmRule( )"
+						    (object Message "getAllAlgorithmRole( )"
 							quid       	"5C63DAAB0329"
 							frequency  	"Aperiodic"
 							synchronization 	"Simple"
 							dir        	"FromClientToSupplier"
 							sequence   	"1"
 							ordinal    	0
-							quidu      	"000000000000"
+							quidu      	"5C63D76703CE"
 							creation   	FALSE)
 						    (object Message ""
 							quid       	"5C63DAAB032B"
@@ -12899,14 +12899,14 @@
 						supplier   	"$UNNAMED$64"
 						quidu      	"5C63DAAB0340"
 						messages   	(list Messages
-						    (object Message "GetAllAlgorithmRule( )"
+						    (object Message "GetAllAlgorithmRole( )"
 							quid       	"5C63DAAB0331"
 							frequency  	"Aperiodic"
 							synchronization 	"Simple"
 							dir        	"FromClientToSupplier"
 							sequence   	"1.1"
 							ordinal    	1
-							quidu      	"000000000000"
+							quidu      	"5C63D77402DE"
 							creation   	FALSE)
 						    (object Message ""
 							quid       	"5C63DAAB0334"
@@ -12917,14 +12917,14 @@
 							ordinal    	2
 							quidu      	"000000000000"
 							creation   	FALSE)
-						    (object Message "delAlgorithmRuleById( )"
+						    (object Message "delAlgorithmRoleById( )"
 							quid       	"5C63DAAB0335"
 							frequency  	"Aperiodic"
 							synchronization 	"Simple"
 							dir        	"FromClientToSupplier"
 							sequence   	"2.1"
 							ordinal    	5
-							quidu      	"000000000000"
+							quidu      	"5C63DACC00E0"
 							creation   	FALSE)
 						    (object Message ""
 							quid       	"5C63DAAB0337"
@@ -13032,7 +13032,7 @@
 					    location   	(703, 250)
 					    anchor_loc 	1
 					    nlines     	2
-					    max_width  	471
+					    max_width  	435
 					    justify    	0
 					    label      	"")
 					icon       	"control"
@@ -13118,7 +13118,7 @@
 					    height     	105
 					    y_coord    	15
 					    Nested     	FALSE))
-				    (object InterMessView "getAllAlgorithmRule( )" @630
+				    (object InterMessView "getAllAlgorithmRole( )" @630
 					location   	(0, 384)
 					font       	(object Font
 					    size       	10
@@ -13146,7 +13146,7 @@
 					    nlines     	1
 					    max_width  	454
 					    justify    	0
-					    label      	"getAllAlgorithmRule( )"
+					    label      	"getAllAlgorithmRole( )"
 					    pctDist    	0.500000
 					    height     	45
 					    orientation 	0)
@@ -13158,7 +13158,7 @@
 					origin     	(234, 384)
 					terminus   	(687, 384)
 					ordinal    	0)
-				    (object InterMessView "GetAllAlgorithmRule( )" @632
+				    (object InterMessView "GetAllAlgorithmRole( )" @632
 					location   	(0, 489)
 					font       	(object Font
 					    size       	10
@@ -13186,7 +13186,7 @@
 					    nlines     	1
 					    max_width  	463
 					    justify    	0
-					    label      	"GetAllAlgorithmRule( )"
+					    label      	"GetAllAlgorithmRole( )"
 					    pctDist    	0.500000
 					    height     	45
 					    orientation 	0)
@@ -13318,7 +13318,7 @@
 					origin     	(234, 948)
 					terminus   	(687, 948)
 					ordinal    	4)
-				    (object InterMessView "delAlgorithmRuleById( )" @640
+				    (object InterMessView "delAlgorithmRoleById( )" @640
 					location   	(0, 1053)
 					font       	(object Font
 					    size       	10
@@ -13331,7 +13331,7 @@
 					    default_color 	TRUE)
 					label      	(object SegLabel @641
 					    Parent_View 	@640
-					    location   	(1040, 1010)
+					    location   	(1041, 1009)
 					    font       	(object Font
 						size       	10
 						face       	"Arial"
@@ -13346,9 +13346,9 @@
 					    nlines     	1
 					    max_width  	485
 					    justify    	0
-					    label      	"delAlgorithmRuleById( )"
-					    pctDist    	0.497682
-					    height     	44
+					    label      	"delAlgorithmRoleById( )"
+					    pctDist    	0.500000
+					    height     	45
 					    orientation 	0)
 					line_color 	3342489
 					client     	@622
@@ -13609,7 +13609,7 @@
 				supplier   	@648
 				vertices   	(list Points
 				    (255, 883)
-				    (547, 669))
+				    (595, 633))
 				line_style 	0)
 			    (object DependencyView "" @654
 				stereotype 	TRUE
@@ -13619,7 +13619,7 @@
 				supplier   	@649
 				vertices   	(list Points
 				    (255, 915)
-				    (445, 882))
+				    (656, 841))
 				line_style 	0)
 			    (object DependencyView "" @655
 				stereotype 	TRUE
@@ -13638,7 +13638,7 @@
 				client     	@646
 				supplier   	@651
 				vertices   	(list Points
-				    (255, 978)
+				    (334, 1042)
 				    (720, 1357))
 				line_style 	0)))))
 	    (object Class_Category "算子识别计算"
