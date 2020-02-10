@@ -936,7 +936,13 @@ var Topology = {
         var _html = "";
         self.tools.forEach(function (val, index) {
             _html += '<div>\n' +
-                '            <div class="title">' + val.group + '</div>\n' +
+                '            <div class="title">' + `<span id='returnLeft' class='lkr-arrow'>◀</span><div id='pic_list' class="lkr-pic_list"><ul class="lkr-tabs">
+                <li role="presentation" class="active"><a href="#">信号生产模块</a></li>
+                <li role="presentation"><a href="#">调制解词模块</a></li>
+                <li role="presentation"><a href="#">信号生产模块</a></li>
+                <li role="presentation"><a href="#">调制解词模块</a></li>
+                <li role="presentation"><a href="#">信号生产模块</a></li>
+              </ul></div><span id='returnRight' class='lkr-arrow'>▶</span>` + '</div>\n' +
                 '            <div class="buttons"><div class=lkr-addModel onclick="addFrame()" style="cursor: pointer;">+</div>';
             val.children.forEach(function (val1, index1) {
                 _html += '<a title="' + val1.name + '" ondragstart="onDragStart(event,' + JSON.stringify(val1).replace(/\"/g, "'") + ')" draggable="true">\n' +
@@ -946,7 +952,27 @@ var Topology = {
             _html += '</div>\n' +
                 '        </div>';
         });
+        
         $("#flex_tools").html(_html);
+        $('#returnLeft').click(() => {
+            
+            if((document.getElementById('pic_list').scrollLeft - 50) < 0){
+                document.getElementById('pic_list').scrollLeft = 0
+                
+            }else{
+                document.getElementById('pic_list').scrollLeft = document.getElementById('pic_list').scrollLeft - 50
+            }
+        })
+        $('#returnRight').click(() => {
+            
+            if((document.getElementById('pic_list').scrollLeft + 50) > document.getElementById('pic_list').scrollWidth){
+                document.getElementById('pic_list').scrollLeft = document.getElementById('pic_list').scrollWidth
+                
+            }else{
+                document.getElementById('pic_list').scrollLeft = document.getElementById('pic_list').scrollLeft + 50
+            }
+            
+        })
         $("#menu_combine").css('display', "none");
         $("#menu_unCombine").css('display', "block");
         $("#menu_combine").attr('disabled', false);

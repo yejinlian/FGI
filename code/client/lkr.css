@@ -77,9 +77,11 @@ body{
     background-image: url(./static/lkr.png);
     background-size: 100% 100%;
     background-repeat: no-repeat;
+    box-shadow: 0 0 10px 10px rgba(0,0,0,0.2);
 }
 .tools{
     width: 18%;
+    box-shadow: 0 0 10px 10px rgba(0,0,0,0.2);
 }
 .lkr-msg{
     margin-top: 10px;
@@ -94,6 +96,7 @@ body{
     width: 48%;
     height: 100%;
     background-image: url(./static/lkrmsg.png);
+    box-shadow: 0 0 10px 10px rgba(0,0,0,0.2);
     background-size: 100% 100%;
     background-repeat: no-repeat;
 }
@@ -166,4 +169,55 @@ body{
 }
 .lkr-msg-div ul li{
     padding: 5px 0;
+}
+.lkr-tabs{
+    padding: 0px;
+    margin: 0px;
+}
+/* .lkr-tabs li{
+    display: inline-block;
+} */
+.lkr-pic_list
+{
+    display:block;
+    white-space:nowrap;
+    width:80%;
+    /* margin: auto; */
+    overflow:auto;
+}
+.lkr-pic_list li
+{
+    color:#ffffff;
+    padding: 5px 10px;
+    margin:3px;
+    /* background:red; */
+    display:inline-block;
+}
+.lkr-pic_list li a{
+    color:#ffffff;
+}
+.tools .title{
+    padding: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+::-webkit-scrollbar {display:none}
+.lkr-arrow{
+    user-select: none;
+    cursor: pointer;
+    color: #00beff;
+}
+.nav-pills span{
+    color: #ffffff;
+    padding: 10px;
+    cursor: pointer;
+}
+.nav-pills span:hover{
+    background-image: url(./static/botton.png);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+.navbar{
+    margin-bottom: 0px;
 }
