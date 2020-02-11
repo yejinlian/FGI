@@ -22,12 +22,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.github.pagehelper.PageInfo;
 
+import deepthinking.fgi.common.ResultDto;
 import deepthinking.fgi.domain.TDictionaryValue;
+import deepthinking.fgi.model.CalModel;
 import deepthinking.fgi.service.BaseDataService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import deepthinking.parsii.eval.Expression;
+import deepthinking.parsii.eval.Parser;
+import deepthinking.parsii.eval.Scope;
+import deepthinking.parsii.eval.Variable;
+import deepthinking.parsii.tokenizer.ParseException;
 
 @CrossOrigin(origins = "*")
 @Api(value="基础数据API")
@@ -143,5 +150,45 @@ public class BaseController {
 			}
 		}
 		return false;
+	}
+	
+	@RequestMapping(value = "/CalExpress")
+	@ApiOperation(notes = "计算公式值", value = "计算公式值", httpMethod = "POST")
+	@ApiImplicitParams({})
+	public ResultDto<Object> CalExpress(@RequestBody CalModel model) {
+		ResultDto<Object> retDto = new ResultDto<>();
+		Object d = null;
+		if (model != null) {
+			String exp = model.getJexlExp();
+			Map map = model.getMap();
+			d = convertToCode(exp, map);
+		}
+		retDto.setData(d);
+		retDto.setStatus(0);
+		return retDto;
+	}
+	
+	private Double convertToCode(String jexlExp, Map<String, Object> map) {
+		Double dret = null;
+		Scope scope = new Scope();
+		Expression parsiiExpr;
+		try {
+			parsiiExpr = Parser.parse(jexlExp, scope);
+			for (String key : map.keySet()) {
+				Variable var = scope.getVariable(key);
+				Object obj = map.get(key);
+				if (obj != null) {
+					try {
+						double dv = Double.parseDouble(obj.toString());
+						var.setValue(dv);
+					} catch (Exception ex) {
+					}
+				}
+			}
+			dret = parsiiExpr.evaluate();
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return dret;
 	}
 }
