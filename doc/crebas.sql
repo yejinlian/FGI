@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2020/2/13 12:16:12                           */
+/* Created on:     2020/2/13 15:16:40                           */
 /*==============================================================*/
 
 
@@ -8,7 +8,7 @@ drop table if exists Table_Algorithm;
 
 drop table if exists Table_AlgorithmCondition;
 
-drop table if exists Table_AlgorithmRelation;
+drop table if exists Table_AlgorithmRole;
 
 drop table if exists Table_Func;
 
@@ -17,6 +17,8 @@ drop table if exists Table_Module;
 drop table if exists Table_ModuleField;
 
 drop table if exists Table_ModuleUserRelation;
+
+drop table if exists Table_Role;
 
 /*==============================================================*/
 /* Table: Table_Algorithm                                       */
@@ -42,8 +44,8 @@ alter table Table_Algorithm comment '算子模块';
 /*==============================================================*/
 create table Table_AlgorithmCondition
 (
-   ID                   int not null auto_increment comment '主键ID',
-   AlgorithmRelationID  int comment '算子关系ID',
+   ID                   int not null comment '主键ID',
+   AlgorithmRoleID      int comment '算法算子ID',
    LogicRelation        varchar(20) comment '逻辑关系',
    LogicValue           numeric comment '逻辑值',
    Remark               varchar(500) comment '备注',
@@ -53,18 +55,20 @@ create table Table_AlgorithmCondition
 alter table Table_AlgorithmCondition comment '算子运行条件';
 
 /*==============================================================*/
-/* Table: Table_AlgorithmRelation                               */
+/* Table: Table_AlgorithmRole                                   */
 /*==============================================================*/
-create table Table_AlgorithmRelation
+create table Table_AlgorithmRole
 (
-   ID                   int not null auto_increment comment '主键ID',
+   ID                   int not null comment '主键ID',
+   RoleID               int comment '规则ID',
    AlgorithmID          int comment '算子ID',
    PreAlgorithmID       int comment '前序算子ID',
+   Des                  varchar(500) comment '描述',
    Remark               varchar(500) comment '备注',
    primary key (ID)
 );
 
-alter table Table_AlgorithmRelation comment '算子关系';
+alter table Table_AlgorithmRole comment '算法算子关系';
 
 /*==============================================================*/
 /* Table: Table_Func                                            */
@@ -98,9 +102,7 @@ create table Table_Module
    ModuleName           varchar(50) comment '模板名称',
    SqlUrl               varchar(200) comment '数据库连接',
    Tab                  varchar(100) comment '对应物理表',
-   FieldName            varchar(50) comment '字段名称',
-   FieldType            varchar(20) comment '字段类型',
-   ModuleGroup          varchar(100) comment '模板组',
+   ModuleGroup          varchar(20) comment '模板组',
    Des                  varchar(500) comment '模板描述',
    Remark               varchar(500) comment '备注',
    primary key (ID)
@@ -137,13 +139,30 @@ create table Table_ModuleUserRelation
 
 alter table Table_ModuleUserRelation comment '算子用户关系';
 
+/*==============================================================*/
+/* Table: Table_Role                                            */
+/*==============================================================*/
+create table Table_Role
+(
+   ID                   int not null auto_increment comment '主键ID',
+   RoleName             varchar(20) comment '规则名称',
+   Des                  varchar(500) comment '规则描述',
+   Remark               varchar(500) comment '备注',
+   primary key (ID)
+);
+
+alter table Table_Role comment '算法规则';
+
 alter table Table_Algorithm add constraint FK_Reference_6 foreign key (ModuleID)
       references Table_Module (ID) on delete restrict on update restrict;
 
-alter table Table_AlgorithmCondition add constraint FK_Reference_1 foreign key (AlgorithmRelationID)
-      references Table_AlgorithmRelation (ID) on delete restrict on update restrict;
+alter table Table_AlgorithmCondition add constraint FK_Reference_1 foreign key (AlgorithmRoleID)
+      references Table_AlgorithmRole (ID) on delete restrict on update restrict;
 
-alter table Table_AlgorithmRelation add constraint FK_Reference_4 foreign key (AlgorithmID)
+alter table Table_AlgorithmRole add constraint FK_Reference_8 foreign key (RoleID)
+      references Table_Role (ID) on delete restrict on update restrict;
+
+alter table Table_AlgorithmRole add constraint FK_Reference_9 foreign key (AlgorithmID)
       references Table_Algorithm (ID) on delete restrict on update restrict;
 
 alter table Table_Func add constraint FK_Reference_5 foreign key (ModuleID)
