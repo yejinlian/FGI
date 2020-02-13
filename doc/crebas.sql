@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2020/2/11 18:40:53                           */
+/* Created on:     2020/2/13 20:23:53                           */
 /*==============================================================*/
 
 
@@ -8,7 +8,7 @@ drop table if exists Table_Algorithm;
 
 drop table if exists Table_AlgorithmCondition;
 
-drop table if exists Table_AlgorithmRelation;
+drop table if exists Table_AlgorithmRole;
 
 drop table if exists Table_Func;
 
@@ -18,132 +18,151 @@ drop table if exists Table_ModuleField;
 
 drop table if exists Table_ModuleUserRelation;
 
+drop table if exists Table_Role;
+
 /*==============================================================*/
 /* Table: Table_Algorithm                                       */
 /*==============================================================*/
 create table Table_Algorithm
 (
-   ID                   varchar(20) not null comment 'ä¸»é”®ID',
-   ModuleID             varchar(20),
-   AlgorithmName        varchar(200) comment 'æ¨¡å—å',
-   AlgorithmAuthor      varchar(20) comment 'æ¨¡å—ä½œè€…',
-   IsPublic             numeric comment 'æ˜¯å¦å…¬å…±æ¨¡å—',
-   AlgorithmType        numeric comment 'æ¨¡å—ç±»å‹(ç®—æ³•å…¬å¼ï¼›é€»è¾‘æ¡ä»¶)',
-   AlgorithmFun         varchar(500) comment 'å…¬å¼',
-   Des           varchar(500) comment 'æè¿°',
-   Remark               varchar(500) comment 'å¤‡æ³¨',
+   ID                   int not null auto_increment comment 'Ö÷¼üID',
+   ModuleID             int comment 'Ä£°åID',
+   AlgorithmName        varchar(200) comment 'Ëã×ÓÃû³Æ',
+   AlgorithmAuthor      varchar(20) comment 'Ëã×Ó×÷Õß',
+   IsPublic             numeric comment 'ÊÇ·ñ¹«¹²Ëã×Ó',
+   AlgorithmType        numeric comment 'Ëã×ÓÀàĞÍ(Ëã·¨¹«Ê½£»Âß¼­Ìõ¼ş)',
+   AlgorithmFun         varchar(500) comment '¹«Ê½',
+   Des                  varchar(500) comment 'ÃèÊö',
+   Remark               varchar(500) comment '±¸×¢',
    primary key (ID)
 );
 
-alter table Table_Algorithm comment 'ç®—å­æ¨¡å—';
+alter table Table_Algorithm comment 'Ëã×ÓÄ£¿é';
 
 /*==============================================================*/
 /* Table: Table_AlgorithmCondition                              */
 /*==============================================================*/
 create table Table_AlgorithmCondition
 (
-   ID                   varchar(20) not null comment 'ä¸»é”®ID',
-   AlgorithmRelationID  varchar(20) comment 'æ¨¡å—å…³ç³»ID',
-   LogicRelation        varchar(20) comment 'é€»è¾‘å…³ç³»',
-   LogicValue           numeric comment 'é€»è¾‘å€¼',
-   Remark               varchar(500) comment 'å¤‡æ³¨',
+   ID                   int not null comment 'Ö÷¼üID',
+   AlgorithmRoleID      int comment 'Ëã·¨Ëã×ÓID',
+   LogicRelation        varchar(20) comment 'Âß¼­¹ØÏµ',
+   LogicValue           numeric comment 'Âß¼­Öµ',
+   Remark               varchar(500) comment '±¸×¢',
    primary key (ID)
 );
 
-alter table Table_AlgorithmCondition comment 'ç®—å­è¿è¡Œæ¡ä»¶';
+alter table Table_AlgorithmCondition comment 'Ëã×ÓÔËĞĞÌõ¼ş';
 
 /*==============================================================*/
-/* Table: Table_AlgorithmRelation                               */
+/* Table: Table_AlgorithmRole                                   */
 /*==============================================================*/
-create table Table_AlgorithmRelation
+create table Table_AlgorithmRole
 (
-   ID                   varchar(20) not null comment 'ä¸»é”®ID',
-   AlgorithmID          varchar(20) comment 'æ¨¡å—ID',
-   PreAlgorithmID       varchar(20) comment 'å‰åºæ¨¡å—ID',
-   Remark               varchar(500) comment 'å¤‡æ³¨',
+   ID                   int not null comment 'Ö÷¼üID',
+   RoleID               int comment '¹æÔòID',
+   AlgorithmID          int comment 'Ëã×ÓID',
+   PreAlgorithmID       int comment 'Ç°ĞòËã×ÓID',
+   Des                  varchar(500) comment 'ÃèÊö',
+   Remark               varchar(500) comment '±¸×¢',
    primary key (ID)
 );
 
-alter table Table_AlgorithmRelation comment 'ç®—å­å…³ç³»';
+alter table Table_AlgorithmRole comment 'Ëã·¨Ëã×Ó¹ØÏµ';
 
 /*==============================================================*/
 /* Table: Table_Func                                            */
 /*==============================================================*/
 create table Table_Func
 (
-   ID                   varchar(20) not null comment 'ä¸»é”®ID',
-   ModuleID             varchar(20) comment 'æ¨¡å—ID',
-   VarName              varchar(20) comment 'å˜é‡åç§°',
-   VarType              varchar(20) comment 'å˜é‡ç±»å‹ï¼š
-            å¸¸é‡
-            æ•°æ®é¡¹
-            å…¶ä»–æ¨¡å—è®¡ç®—ç»“æœ',
-   ValValue             varchar(20) comment 'å˜é‡å€¼ï¼š
-            å˜é‡ç±»å‹ä¸ºå¸¸é‡æ—¶ï¼Œæ­¤å¤„ä¸ºå…·ä½“æ•°å€¼
-            ç±»å‹ä¸ºæ•°æ®é¡¹æ—¶ï¼Œæ­¤å¤„æ¨¡å—ä¸­å­—æ®µåç§°
-            ç±»å‹ä¸ºå…¶ä»–è®¡ç®—ç»“æœæ—¶ï¼Œæ­¤å¤„ä¸ºå…¶ä»–æ¨¡å—çš„IDã€‚
+   ID                   int not null auto_increment comment 'Ö÷¼üID',
+   ModuleID             int comment 'Ä£¿éID',
+   VarName              varchar(20) comment '±äÁ¿Ãû³Æ',
+   VarType              varchar(20) comment '±äÁ¿ÀàĞÍ£º
+            ³£Á¿
+            Êı¾İÏî
+            ÆäËûÄ£¿é¼ÆËã½á¹û',
+   ValValue             varchar(20) comment '±äÁ¿Öµ£º
+            ±äÁ¿ÀàĞÍÎª³£Á¿Ê±£¬´Ë´¦Îª¾ßÌåÊıÖµ
+            ÀàĞÍÎªÊı¾İÏîÊ±£¬´Ë´¦Ä£¿éÖĞ×Ö¶ÎÃû³Æ
+            ÀàĞÍÎªÆäËû¼ÆËã½á¹ûÊ±£¬´Ë´¦ÎªÆäËûÄ£¿éµÄID¡£
             ',
-   Remark               varchar(500) comment 'å¤‡æ³¨',
+   Remark               varchar(500) comment '±¸×¢',
    primary key (ID)
 );
 
-alter table Table_Func comment 'å…¬å¼å˜é‡';
+alter table Table_Func comment '¹«Ê½±äÁ¿';
 
 /*==============================================================*/
 /* Table: Table_Module                                          */
 /*==============================================================*/
 create table Table_Module
 (
-   ID                   varchar(20) not null comment 'ä¸»é”®ID',
-   ModuleName           varchar(50),
-   SqlUrl               varchar(200),
-   Tab                varchar(100),
-   FieldName            varchar(50) comment 'å­—æ®µåç§°',
-   FieldType            varchar(20) comment 'å­—æ®µç±»å‹',
-   ModuleGroup          varchar(100),
-   Des           varchar(500),
-   Remark               varchar(500) comment 'å¤‡æ³¨',
+   ID                   int not null auto_increment comment 'Ö÷¼üID',
+   ModuleName           varchar(50) comment 'Ä£°åÃû³Æ',
+   SqlUrl               varchar(200) comment 'Êı¾İ¿âÁ¬½Ó',
+   Tab                  varchar(100) comment '¶ÔÓ¦ÎïÀí±í',
+   ModuleGroup          varchar(20) comment 'Ä£°å×é',
+   Des                  varchar(500) comment 'Ä£°åÃèÊö',
+   Remark               varchar(500) comment '±¸×¢',
    primary key (ID)
 );
 
-alter table Table_Module comment 'æ¨¡æ¿';
+alter table Table_Module comment 'Ä£°å';
 
 /*==============================================================*/
 /* Table: Table_ModuleField                                     */
 /*==============================================================*/
 create table Table_ModuleField
 (
-   ID                   varchar(20) not null,
-   ModuleID             varchar(20),
-   FieldName            varchar(20),
-   FieldType            varchar(20),
-   Remark               varchar(500),
+   ID                   int not null auto_increment comment 'Ö÷¼üID',
+   ModuleID             int comment 'Ä£°åID',
+   FieldName            varchar(20) comment '×Ö¶ÎÃû³Æ',
+   FieldType            varchar(20) comment '×Ö¶ÎÀàĞÍ',
+   Remark               varchar(500) comment '±¸×¢',
    primary key (ID)
 );
 
-alter table Table_ModuleField comment 'æ¨¡æ¿åŒ…å«å­—æ®µ';
+alter table Table_ModuleField comment 'Ä£°å°üº¬×Ö¶Î';
 
 /*==============================================================*/
 /* Table: Table_ModuleUserRelation                              */
 /*==============================================================*/
 create table Table_ModuleUserRelation
 (
-   ID                   varchar(20) not null comment 'ä¸»é”®ID',
-   ModuleID             varchar(20) comment 'æ¨¡å—ID',
-   UserName             varchar(30) comment 'ç”¨æˆ·å',
-   Remark               varchar(500) comment 'å¤‡æ³¨',
+   ID                   int not null auto_increment comment 'Ö÷¼üID',
+   ModuleID             int comment 'Ëã×ÓID',
+   UserName             varchar(30) comment 'ÓÃ»§Ãû',
+   Remark               varchar(500) comment '±¸×¢',
    primary key (ID)
 );
 
-alter table Table_ModuleUserRelation comment 'ç®—å­ç”¨æˆ·å…³ç³»';
+alter table Table_ModuleUserRelation comment 'Ëã×ÓÓÃ»§¹ØÏµ';
+
+/*==============================================================*/
+/* Table: Table_Role                                            */
+/*==============================================================*/
+create table Table_Role
+(
+   ID                   int not null auto_increment comment 'Ö÷¼üID',
+   RoleName             varchar(20) comment '¹æÔòÃû³Æ',
+   Des                  varchar(500) comment '¹æÔòÃèÊö',
+   Remark               varchar(500) comment '±¸×¢',
+   primary key (ID)
+);
+
+alter table Table_Role comment 'Ëã·¨¹æÔò';
 
 alter table Table_Algorithm add constraint FK_Reference_6 foreign key (ModuleID)
       references Table_Module (ID) on delete restrict on update restrict;
 
-alter table Table_AlgorithmCondition add constraint FK_Reference_1 foreign key (AlgorithmRelationID)
-      references Table_AlgorithmRelation (ID) on delete restrict on update restrict;
+alter table Table_AlgorithmCondition add constraint FK_Reference_1 foreign key (AlgorithmRoleID)
+      references Table_AlgorithmRole (ID) on delete restrict on update restrict;
 
-alter table Table_AlgorithmRelation add constraint FK_Reference_4 foreign key (AlgorithmID)
+alter table Table_AlgorithmRole add constraint FK_Reference_8 foreign key (RoleID)
+      references Table_Role (ID) on delete restrict on update restrict;
+
+alter table Table_AlgorithmRole add constraint FK_Reference_9 foreign key (AlgorithmID)
       references Table_Algorithm (ID) on delete restrict on update restrict;
 
 alter table Table_Func add constraint FK_Reference_5 foreign key (ModuleID)
