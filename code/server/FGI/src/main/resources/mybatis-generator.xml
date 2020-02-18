@@ -16,7 +16,7 @@
 	</commentGenerator>
 
 	<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-		connectionURL="jdbc:mysql://127.0.0.1:3306/fgi" userId="root"
+		connectionURL="jdbc:mysql://127.0.0.1:3306/fgi" userId="user"
 		password="123456">
 	</jdbcConnection>
 
@@ -38,15 +38,13 @@
 		targetProject="src/main/java">
 		<property name="enableSubPackages" value="true" />
 	</javaClientGenerator>
-<!-- 	<table tableName="t_datashield_device" ></table>
-	<table tableName="t_dictionary" ></table>
-    <table tableName="t_dictionary_value" ></table>
-    <table tableName="t_firmware" ></table>
-	<table tableName="t_inspection_line" ></table>
-	<table tableName="t_inspection_point" ></table>
-	<table tableName="t_instrument" ></table>
-	<table tableName="t_orgnization" ></table>
-	<table tableName="t_staff" ></table> 
-    <table tableName="t_dsdata_record" ></table>-->
+ 	<!--<table tableName="Table_Algorithm" ></table>
+    <table tableName="Table_AlgorithmCondition" ></table>
+    <table tableName="Table_AlgorithmRole" ></table>
+    <table tableName="Table_Func" ></table>
+    <table tableName="Table_Module" ></table>
+    <table tableName="Table_ModuleField" ></table>
+    <table tableName="Table_ModuleUserRelation" ></table>
+    <table tableName="Table_Role" ></table>-->
 	</context>
 </generatorConfiguration>  
