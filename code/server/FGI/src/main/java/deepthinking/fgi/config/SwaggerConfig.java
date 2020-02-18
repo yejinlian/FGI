@@ -5,7 +5,7 @@
  * @create 2018-06-02
  *********************************************/
 
-package deepthinking.fgi;
+package deepthinking.fgi.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -45,9 +45,9 @@ public class SwaggerConfig{
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("CRSwi设备防篡改服务器API文档")
-                .description("本接口文档提供对象为设备开发人员与管理端开发人员")
-                .version("1.0.0")
+                .title("FGI服务API文档")
+                .description("本接口文档提供对象为前端开发人员和第三方服务开发人员")
+                .version("0.0.1")
                 .build();
     }
 
