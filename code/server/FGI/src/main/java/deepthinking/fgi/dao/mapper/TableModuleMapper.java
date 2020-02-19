@@ -3,6 +3,8 @@ package deepthinking.fgi.dao.mapper;
 import deepthinking.fgi.domain.TableModule;
 import deepthinking.fgi.domain.TableModuleCriteria;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.DeleteProvider;
 import org.apache.ibatis.annotations.Insert;
@@ -157,4 +159,25 @@ public interface TableModuleMapper {
         "where ID = #{id,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(TableModule record);
+
+    @Select({
+            "select DISTINCT ModuleName from table_module"
+    })
+    List<String> GetModuleGroup();
+
+    @Select({
+            "select table_name from information_schema.tables where table_schema='fgi' and table_name not like 'table_%'"
+    })
+    List<String> findAllTableFromDB();
+
+    @Select({
+            "SELECT t.COLUMN_NAME as COLUMN_NAME," ,
+                    " (CASE WHEN t.IS_NULLABLE = 'YES' THEN '1' ELSE '0' END) IS_NULLABLE," ,
+                    " t.CHARACTER_MAXIMUM_LENGTH LENGTH," ,
+                    " t.COLUMN_COMMENT COLUMN_COMMENT," ,
+                    " t.COLUMN_TYPE COLUMN_TYPE" ,
+                    " FROM information_schema.`COLUMNS` t" ,
+                    " WHERE t.TABLE_SCHEMA = 'fgi' AND t.TABLE_NAME = #{tableName,jdbcType=VARCHAR} AND COLUMN_NAME !='ID'"
+    })
+    List<Map<String,Object>> findAllFiledByTableName(String tableName);
 }
