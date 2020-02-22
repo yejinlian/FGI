@@ -1,8 +1,12 @@
 package deepthinking.fgi.domain;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  * 算子模块
  */
+@ApiModel(value = "算子模块")
 public class TableAlgorithm {
     /**
      *
@@ -11,6 +15,7 @@ public class TableAlgorithm {
      *
      * @mbg.generated
      */
+    @ApiModelProperty(value = "ID")
     private Integer id;
 
     /**
@@ -20,6 +25,7 @@ public class TableAlgorithm {
      * 模板ID
      * @mbg.generated
      */
+    @ApiModelProperty(value = "模板ID")
     private Integer moduleid;
 
     /**
@@ -29,6 +35,7 @@ public class TableAlgorithm {
      * 算子名称
      * @mbg.generated
      */
+    @ApiModelProperty(value = "算子名称")
     private String algorithmname;
 
     /**
@@ -38,6 +45,7 @@ public class TableAlgorithm {
      * 算子作者
      * @mbg.generated
      */
+    @ApiModelProperty(value = "算子作者")
     private String algorithmauthor;
 
     /**
@@ -47,6 +55,7 @@ public class TableAlgorithm {
      * 是否公共算子
      * @mbg.generated
      */
+    @ApiModelProperty(value = "是否公共算子")
     private Long ispublic;
 
     /**
@@ -56,6 +65,7 @@ public class TableAlgorithm {
      * 算子类型(算法公式；逻辑条件)
      * @mbg.generated
      */
+    @ApiModelProperty(value = "算子类型(算法公式；逻辑条件)")
     private Long algorithmtype;
 
     /**
@@ -65,6 +75,7 @@ public class TableAlgorithm {
      * 公式
      * @mbg.generated
      */
+    @ApiModelProperty(value = "公式")
     private String algorithmfun;
 
     /**
@@ -74,6 +85,7 @@ public class TableAlgorithm {
      * 描述
      * @mbg.generated
      */
+    @ApiModelProperty(value = "描述")
     private String des;
 
     /**
@@ -83,6 +95,7 @@ public class TableAlgorithm {
      * 备注
      * @mbg.generated
      */
+    @ApiModelProperty(value = "备注")
     private String remark;
 
     /**

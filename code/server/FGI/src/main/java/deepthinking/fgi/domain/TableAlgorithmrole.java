@@ -1,8 +1,12 @@
 package deepthinking.fgi.domain;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  * 算法算子关系
  */
+@ApiModel(value = "算法算子关系")
 public class TableAlgorithmrole {
     /**
      *
@@ -11,6 +15,7 @@ public class TableAlgorithmrole {
      *
      * @mbg.generated
      */
+    @ApiModelProperty(value = "ID")
     private Integer id;
 
     /**
@@ -20,6 +25,7 @@ public class TableAlgorithmrole {
      * 规则ID
      * @mbg.generated
      */
+    @ApiModelProperty(value = "规则ID")
     private Integer roleid;
 
     /**
@@ -29,6 +35,7 @@ public class TableAlgorithmrole {
      * 算子ID
      * @mbg.generated
      */
+    @ApiModelProperty(value = "算子ID")
     private Integer algorithmid;
 
     /**
@@ -38,6 +45,7 @@ public class TableAlgorithmrole {
      * 前序算子ID
      * @mbg.generated
      */
+    @ApiModelProperty(value = "前序算子ID")
     private Integer prealgorithmid;
 
     /**
@@ -47,6 +55,7 @@ public class TableAlgorithmrole {
      * 描述
      * @mbg.generated
      */
+    @ApiModelProperty(value = "描述")
     private String des;
 
     /**
@@ -56,6 +65,7 @@ public class TableAlgorithmrole {
      * 备注
      * @mbg.generated
      */
+    @ApiModelProperty(value = "备注")
     private String remark;
 
     /**

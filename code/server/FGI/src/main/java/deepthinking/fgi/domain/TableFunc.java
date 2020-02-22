@@ -1,8 +1,12 @@
 package deepthinking.fgi.domain;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  * 公式变量
  */
+@ApiModel(value = "公式变量")
 public class TableFunc {
     /**
      *
@@ -11,6 +15,7 @@ public class TableFunc {
      *
      * @mbg.generated
      */
+    @ApiModelProperty(value = "ID")
     private Integer id;
 
     /**
@@ -20,6 +25,7 @@ public class TableFunc {
      * 模块ID
      * @mbg.generated
      */
+    @ApiModelProperty(value = "模块ID")
     private Integer moduleid;
 
     /**
@@ -29,6 +35,7 @@ public class TableFunc {
      * 变量名称
      * @mbg.generated
      */
+    @ApiModelProperty(value = "变量名称")
     private String varname;
 
     /**
@@ -40,6 +47,7 @@ public class TableFunc {
      *             其他模块计算结果',
      * @mbg.generated
      */
+    @ApiModelProperty(value = "变量类型：常量 数据项 其他模块计算结果")
     private String vartype;
 
     /**
@@ -53,6 +61,7 @@ public class TableFunc {
      *
      * @mbg.generated
      */
+    @ApiModelProperty(value = "变量值： 变量类型为常量时，此处为具体数值;类型为数据项时，此处模块中字段名称;类型为其他计算结果时，此处为其他模块的ID")
     private String valvalue;
 
     /**
@@ -62,6 +71,7 @@ public class TableFunc {
      * 备注
      * @mbg.generated
      */
+    @ApiModelProperty(value = "备注")
     private String remark;
 
     /**
