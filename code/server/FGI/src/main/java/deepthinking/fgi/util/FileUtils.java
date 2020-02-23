@@ -7,9 +7,7 @@
 
 package deepthinking.fgi.util;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -82,6 +80,30 @@ public class FileUtils {
 
 		return line.toString();
 
+	}
+
+	/**
+	 * 读取txt文件内容,有效防止io阻塞
+	 * @param filePath
+	 * @return
+	 */
+	public static String readTxtFile(String filePath) {
+		String content = null;
+		try (Reader reader = new InputStreamReader(new FileInputStream(filePath), "GBK")) {
+			StringBuffer sb = new StringBuffer();
+			char[] tempchars = new char[1024];
+			while (reader.read(tempchars) != -1) {
+				sb.append(tempchars);
+			}
+			content = sb.toString();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return content;
 	}
 	
 	/*************

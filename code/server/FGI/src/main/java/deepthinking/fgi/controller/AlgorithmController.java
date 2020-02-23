@@ -1,9 +1,14 @@
 package deepthinking.fgi.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import deepthinking.fgi.common.ResultDto;
 import deepthinking.fgi.domain.TableAlgorithm;
+import deepthinking.fgi.domain.TableRole;
 import deepthinking.fgi.model.AlgorithmModel;
 import deepthinking.fgi.service.TableAlgorithmService;
+import deepthinking.fgi.service.TableRoleService;
+import deepthinking.fgi.util.FileUtils;
+import deepthinking.fgi.util.JsonListUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -11,6 +16,7 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,6 +32,8 @@ public class AlgorithmController {
 
     @Resource
     TableAlgorithmService tableAlgorithmService;
+    @Resource
+    TableRoleService tableRoleService;
 
     @GetMapping("/getAllAlgorithm")
     @ApiOperation(value = "03-01 获取公共的和个人的所有算子,仅返回算子基本信息", notes = "返回算子基本信息", httpMethod = "GET")
@@ -70,5 +78,12 @@ public class AlgorithmController {
             result.setMsg("算子与其他算子存在关联关系，无法删除");
         }
         return result;
+    }
+
+    @GetMapping("/readAlgorithmRuleFromFile")
+    @ApiOperation(value = "16 导入算法规则", notes = "导入算法规则", httpMethod = "GET")
+    @ApiImplicitParam(name = "filename", value = "文件路径", dataType = "string", paramType = "query", required = true)
+    public Boolean readAlgorithmRuleFromFile(String filename){
+        return tableRoleService.batchInsert(filename);
     }
 }
