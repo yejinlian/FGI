@@ -1,7 +1,7 @@
 package deepthinking.fgi.service;
 
 import deepthinking.fgi.domain.TableAlgorithm;
-import deepthinking.fgi.domain.TableAlgorithmrole;
+import deepthinking.fgi.model.AlgorithmModel;
 
 import java.util.List;
 
@@ -23,19 +23,33 @@ public interface TableAlgorithmService extends BaseService<TableAlgorithm,Intege
      * @param tableAlgorithmrole
      * @return
      */
-    boolean saveAlgorithmLogicRelation(TableAlgorithmrole tableAlgorithmrole);
+//    boolean saveAlgorithmLogicRelation(TableAlgorithmrole tableAlgorithmrole);
 
     /**
-     * 添加算子信息
-     * @param algth
+     * 添加算子信息(包括参数信息)
+     * @param algorithmModel
      * @return
      */
-    boolean addAlgorithm(TableAlgorithm algth);
+    boolean addAlgorithm(AlgorithmModel algorithmModel);
 
     /**
-     * 根据算子ID获取该算子相关的所有信息，包括参数，算法算子关系，算子运行条件
+     * 根据算子ID获取该算子相关的所有信息，包括参数以及参数关联算子信息
      * @param algthId
      * @return
      */
-    TableAlgorithm getAlgorithmById(String algthId);
+    AlgorithmModel getAlgorithmById(String algthId);
+
+    /**
+     * 修改算子信息（包括修改参数）
+     * @param algorithmModel
+     * @return
+     */
+    boolean modAlgorithmById(AlgorithmModel algorithmModel);
+
+    /**
+     * 删除算子
+     * @param algthId
+     * @return
+     */
+    int delAlgorithmById(String algthId);
 }

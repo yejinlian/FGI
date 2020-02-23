@@ -1,8 +1,12 @@
 package deepthinking.fgi.domain;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  * 算子用户关系
  */
+@ApiModel(value = "算子用户关系")
 public class TableModuleuserrelation {
     /**
      *
@@ -11,6 +15,7 @@ public class TableModuleuserrelation {
      *
      * @mbg.generated
      */
+    @ApiModelProperty("ID")
     private Integer id;
 
     /**
@@ -20,6 +25,7 @@ public class TableModuleuserrelation {
      * 算子ID
      * @mbg.generated
      */
+    @ApiModelProperty("算子ID")
     private Integer moduleid;
 
     /**
@@ -29,6 +35,7 @@ public class TableModuleuserrelation {
      * 用户名
      * @mbg.generated
      */
+    @ApiModelProperty("用户名")
     private String username;
 
     /**
@@ -38,6 +45,7 @@ public class TableModuleuserrelation {
      * 备注
      * @mbg.generated
      */
+    @ApiModelProperty("备注")
     private String remark;
 
     /**
