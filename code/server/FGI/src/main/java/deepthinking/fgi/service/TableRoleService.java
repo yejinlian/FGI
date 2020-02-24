@@ -22,6 +22,14 @@ public interface TableRoleService extends BaseService<TableRole,Integer> {
     boolean batchInsert(String filePath);
 
     /**
+     * 拼装算法导出实体
+     * @param id
+     * @author 王若山
+     * @return
+     */
+    TableRole GetTableExportData(Integer id);
+
+    /**
      * 根据用户获取所有算法规则 username暂时不用
      * @param username
      * @return
