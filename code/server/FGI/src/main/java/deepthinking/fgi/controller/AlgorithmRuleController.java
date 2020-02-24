@@ -48,7 +48,7 @@ public class AlgorithmRuleController {
         String filename = UUID.randomUUID().toString();
         String path = FileUtils.getConTextPath() + "/WEB-INF/" + filename;
         try {
-            FileUtils.writeFile(path, JSONArray.toJSON(tableRoleService.selectByPrimaryKey(id)).toString().getBytes());
+            FileUtils.writeFile(path, JSONArray.toJSON(tableRoleService.GetTableExportData(id)).toString().getBytes());
             // 以流的形式下载文件。
             InputStream fis = new BufferedInputStream(new FileInputStream(path));
             byte[] buffer = new byte[fis.available()];
