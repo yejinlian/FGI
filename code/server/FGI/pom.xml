@@ -12,6 +12,7 @@
 	</parent>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.8</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -24,10 +25,10 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		<dependency>
+		<!--<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jdbc</artifactId>
-		</dependency>
+		</dependency>-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-aop</artifactId>
@@ -110,11 +111,11 @@
 
 		<!-- 添加日志支持 -->
 		<!--解决Spring使用slf4j输出日志与log4j冲突的问题-->
-		<dependency>
+		<!--<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
 			</dependency>
-		<!-- log4j的包 -->
+		&lt;!&ndash; log4j的包 &ndash;&gt;
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
@@ -123,10 +124,21 @@
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>1.2.17</version>
+		</dependency>-->
+		<!-- 添加日志支持 -->
+		<!--添加Springboot默认支持的logback作为标准日志输出-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-logging</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.1.1</version>
 		</dependency>
 	</dependencies>
 	<build>
-		<finalName>CRSwi-DataShield</finalName>
+		<finalName>fgiServer</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.mybatis.generator</groupId>

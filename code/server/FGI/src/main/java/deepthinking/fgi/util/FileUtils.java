@@ -7,9 +7,7 @@
 
 package deepthinking.fgi.util;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -82,6 +80,80 @@ public class FileUtils {
 
 		return line.toString();
 
+	}
+
+	/**
+	 * 读取txt文件内容,有效防止io阻塞
+	 * @param filePath
+	 * @author 王若山
+	 * @return
+	 */
+	public static String readTxtFile(String filePath) {
+		String content = null;
+		try (Reader reader = new InputStreamReader(new FileInputStream(filePath), "GBK")) {
+			StringBuffer sb = new StringBuffer();
+			char[] tempchars = new char[1024];
+			while (reader.read(tempchars) != -1) {
+				sb.append(tempchars);
+			}
+			content = sb.toString();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return content;
+	}
+
+	/**
+	 * 写文件
+	 * @param fileName
+	 * @param content
+	 * @author 王若山
+	 * @return
+	 */
+	public static int writeFile(String fileName, byte[] content) {
+		File file = new File(fileName);
+		File fileparent = file.getParentFile();
+		if (!fileparent.exists()) {
+			System.out.println("文件夹不存在！");
+//			fileparent.mkdirs();
+		}
+		FileOutputStream os = null;
+		try {
+			os = new FileOutputStream(fileName);
+			os.write(content);
+			os.flush();
+
+		} catch (Exception e) {
+			System.out.println("写入文件异常:" + e.getMessage());
+			return -1;
+		} finally {
+			try {
+				if (null != os)
+					os.close();
+			} catch (IOException e) {
+			}
+		}
+		os = null;
+		return 0;
+	}
+
+	/**
+	 * 获取windows/linux的项目根目录
+	 * @author 王若山
+	 * @return
+	 */
+	public static String getConTextPath(){
+		String fileUrl = Thread.currentThread().getContextClassLoader().getResource("").getPath();
+		if("usr".equals(fileUrl.substring(1,4))){
+			fileUrl = (fileUrl.substring(0,fileUrl.length()-16));//linux
+		}else{
+			fileUrl = (fileUrl.substring(1,fileUrl.length()-16));//windows
+		}
+		return fileUrl;
 	}
 	
 	/*************

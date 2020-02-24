@@ -171,7 +171,7 @@ public class DruidConfiguration{
         datasource.setMaxActive(Integer.valueOf(this.getMax_active()));
         datasource.setMinEvictableIdleTimeMillis(Long.valueOf(this.getMin_evictable_idle_time_millis()));
         try {
-			datasource.setFilters("stat,wall");
+			datasource.setFilters("stat,wall,slf4j");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
