@@ -83,7 +83,7 @@ public class TableAlgorithmServiceImpl extends BaseServiceImpl<TableAlgorithm,In
             if(tableFuncs.size()>0){
                 String new_algorithmFun=algorithmModel.getTableAlgorithm().getAlgorithmfun();
                 if(new_algorithmFun.equals(old_algorithmFun)){//一样
-                    tableFuncs.stream().forEach(fun->tableFuncMapper.updateByPrimaryKey(fun));
+                    tableFuncs.stream().forEach(fun->tableFuncMapper.updateByPrimaryKeySelective(fun));
                 }else{
                     TableFuncCriteria tableFuncCriteria=new TableFuncCriteria();
                     tableFuncCriteria.createCriteria().andModuleidEqualTo(algorithmModel.getTableAlgorithm().getId());

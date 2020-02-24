@@ -14,7 +14,7 @@ public class AlgorithmRuleDataModel {
     @ApiModelProperty(value = "ID")
     private Integer id;
     @ApiModelProperty(value = "规则ID")
-    private String roleId;
+    private Integer roleId;
     @ApiModelProperty(value = "算子ID")
     private Integer algorithmid;
     @ApiModelProperty(value = "算子信息")
@@ -33,7 +33,7 @@ public class AlgorithmRuleDataModel {
     public AlgorithmRuleDataModel() {
     }
 
-    public AlgorithmRuleDataModel(Integer id, String roleId, Integer algorithmid, AlgorithmModel algorithmModel,
+    public AlgorithmRuleDataModel(Integer id, Integer roleId, Integer algorithmid, AlgorithmModel algorithmModel,
                                   Integer prealgorithmid, AlgorithmModel preaAlgorithmModel, TableAlgorithmcondition tableAlgorithmcondition, String des, String remark) {
         this.id = id;
         this.roleId = roleId;
@@ -54,11 +54,11 @@ public class AlgorithmRuleDataModel {
         this.id = id;
     }
 
-    public String getRoleId() {
+    public Integer getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(String roleId) {
+    public void setRoleId(Integer roleId) {
         this.roleId = roleId;
     }
 

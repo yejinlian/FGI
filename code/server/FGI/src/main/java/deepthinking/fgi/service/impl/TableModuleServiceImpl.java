@@ -88,7 +88,7 @@ public class TableModuleServiceImpl extends BaseServiceImpl<TableModule,Integer>
     @Override
     public boolean modModuleById(TableModule module) {
         //修改模型
-        int i=updateByPrimaryKey(module);
+        int i=updateByPrimaryKeySelective(module);
         if(i==1){
             //获取目前传入的模型关联字段
             List<TableModulefield> list=module.getModulefields();
