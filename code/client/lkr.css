@@ -43,6 +43,21 @@ body{
     height: 75%;
     padding: 0 20px;
 }
+.lkr-input{
+    background-color: rgba(0,0,0,0);
+    padding: 5px 15px;
+    border: none;
+    outline: none;
+    background-image: url(./static/select.png);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+.lkr-select option{
+    background-color: rgb(22, 65, 144);
+    background-image: url(./static/select.png);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
 .lkr-button{
     font-size: 12px;
     display: inline-block;
