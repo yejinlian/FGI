@@ -85,6 +85,7 @@ public class FileUtils {
 	/**
 	 * 读取txt文件内容,有效防止io阻塞
 	 * @param filePath
+	 * @author 王若山
 	 * @return
 	 */
 	public static String readTxtFile(String filePath) {
@@ -104,6 +105,55 @@ public class FileUtils {
 			e.printStackTrace();
 		}
 		return content;
+	}
+
+	/**
+	 * 写文件
+	 * @param fileName
+	 * @param content
+	 * @author 王若山
+	 * @return
+	 */
+	public static int writeFile(String fileName, byte[] content) {
+		File file = new File(fileName);
+		File fileparent = file.getParentFile();
+		if (!fileparent.exists()) {
+			System.out.println("文件夹不存在！");
+//			fileparent.mkdirs();
+		}
+		FileOutputStream os = null;
+		try {
+			os = new FileOutputStream(fileName);
+			os.write(content);
+			os.flush();
+
+		} catch (Exception e) {
+			System.out.println("写入文件异常:" + e.getMessage());
+			return -1;
+		} finally {
+			try {
+				if (null != os)
+					os.close();
+			} catch (IOException e) {
+			}
+		}
+		os = null;
+		return 0;
+	}
+
+	/**
+	 * 获取windows/linux的项目根目录
+	 * @author 王若山
+	 * @return
+	 */
+	public static String getConTextPath(){
+		String fileUrl = Thread.currentThread().getContextClassLoader().getResource("").getPath();
+		if("usr".equals(fileUrl.substring(1,4))){
+			fileUrl = (fileUrl.substring(0,fileUrl.length()-16));//linux
+		}else{
+			fileUrl = (fileUrl.substring(1,fileUrl.length()-16));//windows
+		}
+		return fileUrl;
 	}
 	
 	/*************
