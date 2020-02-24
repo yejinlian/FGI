@@ -4,8 +4,12 @@ import deepthinking.fgi.domain.TableRole;
 import deepthinking.fgi.domain.TableRoleCriteria.Criteria;
 import deepthinking.fgi.domain.TableRoleCriteria.Criterion;
 import deepthinking.fgi.domain.TableRoleCriteria;
+
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.jdbc.SQL;
 
 public class TableRoleSqlProvider {
@@ -45,24 +49,44 @@ public class TableRoleSqlProvider {
     public String insertSelective(TableRole record) {
         SQL sql = new SQL();
         sql.INSERT_INTO("table_role");
-        
+
         if (record.getId() != null) {
             sql.VALUES("ID", "#{id,jdbcType=INTEGER}");
         }
-        
+
         if (record.getRolename() != null) {
             sql.VALUES("RoleName", "#{rolename,jdbcType=VARCHAR}");
         }
-        
+
         if (record.getDes() != null) {
             sql.VALUES("Des", "#{des,jdbcType=VARCHAR}");
         }
-        
+
         if (record.getRemark() != null) {
             sql.VALUES("Remark", "#{remark,jdbcType=VARCHAR}");
         }
-        
+
         return sql.toString();
+    }
+
+    /**
+     * 批量插入
+     * @param roleList  算法规则列表
+     * @Author 王若山
+     * @return
+     */
+    public String batchInsert(@Param("list") List<TableRole> roleList) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("INSERT INTO table_role");
+        stringBuilder.append("(ID,RoleName,Des,Remark)");
+        stringBuilder.append("VALUES ");
+        MessageFormat messageFormat = new MessageFormat("(#'{'list[{0}].id},#'{'list[{0}].rolename},#'{'list[{0}].des},#'{'list[{0}].remark})");
+        for (int i = 0; i < roleList.size(); i++) {
+            stringBuilder.append(messageFormat.format(new Integer[]{i}));
+            stringBuilder.append(",");
+        }
+        stringBuilder.setLength(stringBuilder.length() - 1);
+        return stringBuilder.toString();
     }
 
     /**

@@ -1,8 +1,12 @@
 package deepthinking.fgi.domain;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  * 算子运行条件
  */
+@ApiModel(value = "算子运行条件")
 public class TableAlgorithmcondition {
     /**
      *
@@ -11,6 +15,7 @@ public class TableAlgorithmcondition {
      *
      * @mbg.generated
      */
+    @ApiModelProperty(value = "ID")
     private Integer id;
 
     /**
@@ -20,6 +25,7 @@ public class TableAlgorithmcondition {
      * 算法算子ID
      * @mbg.generated
      */
+    @ApiModelProperty(value = "算法算子ID")
     private Integer algorithmroleid;
 
     /**
@@ -29,6 +35,7 @@ public class TableAlgorithmcondition {
      * 逻辑关系
      * @mbg.generated
      */
+    @ApiModelProperty(value = "逻辑关系")
     private String logicrelation;
 
     /**
@@ -38,6 +45,7 @@ public class TableAlgorithmcondition {
      * 逻辑值
      * @mbg.generated
      */
+    @ApiModelProperty(value = "逻辑值")
     private Long logicvalue;
 
     /**
@@ -47,6 +55,7 @@ public class TableAlgorithmcondition {
      * 备注
      * @mbg.generated
      */
+    @ApiModelProperty(value = "备注")
     private String remark;
 
     /**

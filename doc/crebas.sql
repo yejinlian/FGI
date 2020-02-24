@@ -1,12 +1,14 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2020/2/13 20:23:53                           */
+/* Created on:     2020/2/24 22:04:23                           */
 /*==============================================================*/
 
 
 drop table if exists Table_Algorithm;
 
 drop table if exists Table_AlgorithmCondition;
+
+drop table if exists Table_AlgorithmIF;
 
 drop table if exists Table_AlgorithmRole;
 
@@ -25,7 +27,7 @@ drop table if exists Table_Role;
 /*==============================================================*/
 create table Table_Algorithm
 (
-   ID                   int not null auto_increment comment '主键ID',
+   ID                   int not null comment '主键ID',
    ModuleID             int comment '模板ID',
    AlgorithmName        varchar(200) comment '算子名称',
    AlgorithmAuthor      varchar(20) comment '算子作者',
@@ -53,6 +55,23 @@ create table Table_AlgorithmCondition
 );
 
 alter table Table_AlgorithmCondition comment '算子运行条件';
+
+/*==============================================================*/
+/* Table: Table_AlgorithmIF                                     */
+/*==============================================================*/
+create table Table_AlgorithmIF
+(
+   ID                   int not null comment '主键ID',
+   ModuleID             int comment '算子ID',
+   IFName               varchar(20) comment '接口名称',
+   IFType               varchar(20) comment '接口类型：',
+   "InOut"              numeric comment '输入输出
+            ',
+   Remark               varchar(500) comment '备注',
+   primary key (ID)
+);
+
+alter table Table_AlgorithmIF comment '算子接口';
 
 /*==============================================================*/
 /* Table: Table_AlgorithmRole                                   */
@@ -158,6 +177,9 @@ alter table Table_Algorithm add constraint FK_Reference_6 foreign key (ModuleID)
 
 alter table Table_AlgorithmCondition add constraint FK_Reference_1 foreign key (AlgorithmRoleID)
       references Table_AlgorithmRole (ID) on delete restrict on update restrict;
+
+alter table Table_AlgorithmIF add constraint FK_Reference_10 foreign key (ModuleID)
+      references Table_Algorithm (ID) on delete restrict on update restrict;
 
 alter table Table_AlgorithmRole add constraint FK_Reference_8 foreign key (RoleID)
       references Table_Role (ID) on delete restrict on update restrict;
