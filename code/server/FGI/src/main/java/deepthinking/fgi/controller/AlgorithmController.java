@@ -36,8 +36,7 @@ public class AlgorithmController {
 
     @Resource
     TableAlgorithmService tableAlgorithmService;
-    @Resource
-    TableRoleService tableRoleService;
+
 
     @GetMapping("/getAllAlgorithm")
     @ApiOperation(value = "03-01 获取公共的和个人的所有算子,仅返回算子基本信息", notes = "返回算子基本信息", httpMethod = "GET")
@@ -84,41 +83,4 @@ public class AlgorithmController {
         return result;
     }
 
-    @GetMapping("/readAlgorithmRuleFromFile")
-    @ApiOperation(value = "16 导入算法规则", notes = "导入算法规则", httpMethod = "GET")
-    @ApiImplicitParam(name = "filename", value = "文件路径", dataType = "string", paramType = "query", required = true)
-    public Boolean readAlgorithmRuleFromFile(String filename){
-        return tableRoleService.batchInsert(filename);
-    }
-
-    @GetMapping("/saveAlgorithmRule2File")
-    @ApiOperation(value = "17 导出算法规则", notes = "导出算法规则", httpMethod = "GET")
-    @ApiImplicitParam(name = "id", value = "规则编号", dataType = "integer", paramType = "query", required = true)
-    public void saveAlgorithmRule2File(Integer id, HttpServletResponse response){
-        String filename = UUID.randomUUID().toString();
-        String path = FileUtils.getConTextPath() + "/WEB-INF/" + filename;
-        try {
-            FileUtils.writeFile(path, JSONArray.toJSON(tableRoleService.selectByPrimaryKey(id)).toString().getBytes());
-            // 以流的形式下载文件。
-            InputStream fis = new BufferedInputStream(new FileInputStream(path));
-            byte[] buffer = new byte[fis.available()];
-            fis.read(buffer);
-            fis.close();
-            // 清空response
-            response.reset();
-            OutputStream toClient = new BufferedOutputStream(response.getOutputStream());
-            response.setContentType("application/octet-stream");
-            response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode("算法规则导出.txt", "UTF-8"));
-            toClient.write(buffer);
-            toClient.flush();
-            toClient.close();
-        } catch (Exception ex) {
-        } finally {
-            try {
-                File f = new File(path);
-                f.delete();
-            } catch (Exception e) {
-            }
-        }
-    }
 }
