@@ -45,15 +45,28 @@ public class TableAlgorithmServiceImpl extends BaseServiceImpl<TableAlgorithm,In
     public boolean addAlgorithm(AlgorithmModel algorithmModel) {
         try {
             insert(algorithmModel.getTableAlgorithm());
+            //获取算子ID
+            int id=getAlgorithmId(algorithmModel.getTableAlgorithm());
             List<TableFunc> tableFuncs=algorithmModel.getTableFuncs();
             if(tableFuncs.size()>0){
-                tableFuncs.stream().forEach(funcs->tableFuncMapper.insert(funcs));
+                tableFuncs.stream().forEach(funcs->{
+                    funcs.setModuleid(id);//设置算子ID
+                    tableFuncMapper.insert(funcs);
+                });
             }
         }catch (Exception e){
             logger.error(e.getMessage());
             return false;
         }
         return true;
+    }
+    private int getAlgorithmId(TableAlgorithm tableAlgorithm){
+        TableAlgorithmCriteria tableAlgorithmCriteria=new TableAlgorithmCriteria();
+        tableAlgorithmCriteria.createCriteria().andModuleidEqualTo(tableAlgorithm.getModuleid()).andAlgorithmnameEqualTo(tableAlgorithm.getAlgorithmname())
+                .andAlgorithmfunEqualTo(tableAlgorithm.getAlgorithmfun()).andAlgorithmtypeEqualTo(tableAlgorithm.getAlgorithmtype()).andIspublicEqualTo(tableAlgorithm.getIspublic())
+                .andDesEqualTo(tableAlgorithm.getDes()).andRemarkEqualTo(tableAlgorithm.getRemark());
+        int id=tableAlgorithmMapper.selectByExample(tableAlgorithmCriteria).get(0).getId();
+        return id;
     }
 
     @Override

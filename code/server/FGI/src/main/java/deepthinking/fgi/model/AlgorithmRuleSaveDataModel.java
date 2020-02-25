@@ -19,6 +19,9 @@ public class AlgorithmRuleSaveDataModel {
     @ApiModelProperty(value = "算法算子关系集合")
     private List<AlgorithmRuleDataModel> algorithmRuleDataModelList;
 
+    public AlgorithmRuleSaveDataModel() {
+    }
+
     public AlgorithmRuleSaveDataModel(TableRole tableRole, List<AlgorithmRuleDataModel> algorithmRuleDataModelList) {
         this.tableRole = tableRole;
         this.algorithmRuleDataModelList = algorithmRuleDataModelList;
