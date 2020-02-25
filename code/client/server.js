@@ -8,6 +8,7 @@ var fs = require('fs');      // 加载fs文件服务api模块
 var server = new http.Server();  // 创建新的HTTP服务器
 var urlapi = require('url');    // 创建url路由api模块
 server.listen(8001);       // 监听端口8000
+console.log(8001);
 
 // 使用on方法注册事件处理,该事件一直被监听,任何的请求都会进入回调函数,执行相应的操作
 server.on('request', function(request, response) { // 当有request请求的时候触发处理函数  
@@ -16,6 +17,7 @@ server.on('request', function(request, response) { // 当有request请求的时�
 
   //监听请求的网站,以当前脚本目录为根目录的url地址
   console.log(url.pathname);
+  
 
   // 特殊URL会让服务器在发送响应前先等待
   switch(url.pathname) {  //判断请求的路径信息

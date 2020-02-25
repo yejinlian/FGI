@@ -70,13 +70,19 @@ public class TableModuleServiceImpl extends BaseServiceImpl<TableModule,Integer>
 
     @Override
     public boolean addModule(TableModule module) {
+        module.setSqlurl("fgi");
         try {
             //添加模型
             insert(module);
+            //获取模型ID
+            int id=getModuleId(module);
             //获取关联字段
             List<TableModulefield> list=module.getModulefields();
             if(list!=null&&list.size()>0){
-                list.stream().forEach(field->tableModulefieldMapper.insert(field));
+                list.stream().forEach(field->{
+                    field.setModuleid(id);
+                    tableModulefieldMapper.insert(field);
+                });
             }
         }catch (Exception e){
             logger.error(e.getMessage());
@@ -84,11 +90,18 @@ public class TableModuleServiceImpl extends BaseServiceImpl<TableModule,Integer>
         }
         return true;
     }
+    int getModuleId(TableModule module){
+        TableModuleCriteria tableModuleCriteria=new TableModuleCriteria();
+        tableModuleCriteria.createCriteria().andModulegroupEqualTo(module.getModulegroup()).andModulenameEqualTo(module.getModulename())
+                .andSqlurlEqualTo(module.getSqlurl()).andTabEqualTo(module.getTab()).andDesEqualTo(module.getDes()).andRemarkEqualTo(module.getRemark());
+        int id=tableModuleMapper.selectByExample(tableModuleCriteria).get(0).getId();
+        return id;
+    }
 
     @Override
     public boolean modModuleById(TableModule module) {
         //修改模型
-        int i=updateByPrimaryKey(module);
+        int i=updateByPrimaryKeySelective(module);
         if(i==1){
             //获取目前传入的模型关联字段
             List<TableModulefield> list=module.getModulefields();

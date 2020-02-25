@@ -47,7 +47,6 @@ public class TableRoleSqlProvider {
      * @mbg.generated
      */
     public String insertSelective(TableRole record) {
-        System.out.println("ssssssssssssssssssssdddddddddddddddddddddd");
         SQL sql = new SQL();
         sql.INSERT_INTO("table_role");
 

@@ -79,11 +79,13 @@ public class TableAlgorithmrole {
     /**
      * 算子模块
      */
+    @ApiModelProperty(hidden = true)
     private TableAlgorithm tableAlgorithm;
 
     /**
      * 算子运算条件
      */
+    @ApiModelProperty(hidden = true)
     private List<TableAlgorithmcondition> tableAlgorithmconditionList;
 
     /**

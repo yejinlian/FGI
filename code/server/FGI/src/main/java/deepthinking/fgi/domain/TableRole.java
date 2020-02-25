@@ -54,6 +54,7 @@ public class TableRole {
     /**
      * 算法算子关系列表
      */
+    @ApiModelProperty(hidden = true)
     private List<TableAlgorithmrole> tableAlgorithmroleList;
 
     /**

@@ -928,180 +928,199 @@ var Topology = {
     // 初始化画布
     initCanvas: function () {
         var self = this;
+        // <li role="presentation"><a href="#">调制解词模块</a></li>
+        // <li role="presentation"><a href="#">信号生产模块</a></li>
+        // <li role="presentation"><a href="#">调制解词模块</a></li>
+        // <li role="presentation"><a href="#">信号生产模块</a></li>
         console.log("initCanvas")
         // 3. 向引擎注册图形库图形及其相关元素
         $("#flex_tools").append('<div>\n' +
             '            <div class="title"></div>\n' +
             '            <div class="buttons">');
         var _html = "";
-        self.tools.forEach(function (val, index) {
-            _html += '<div>\n' +
-                '            <div class="title">' + `<span id='returnLeft' class='lkr-arrow'>◀</span><div id='pic_list' class="lkr-pic_list"><ul class="lkr-tabs">
-                <li role="presentation" class="active"><a href="#">信号生产模块</a></li>
-                <li role="presentation"><a href="#">调制解词模块</a></li>
-                <li role="presentation"><a href="#">信号生产模块</a></li>
-                <li role="presentation"><a href="#">调制解词模块</a></li>
-                <li role="presentation"><a href="#">信号生产模块</a></li>
-              </ul></div><span id='returnRight' class='lkr-arrow'>▶</span>` + '</div>\n' +
-                '            <div class="buttons"><div class=lkr-addModel onclick="addFrame()" style="cursor: pointer;">+</div>';
-            val.children.forEach(function (val1, index1) {
-                _html += '<a title="' + val1.name + '" ondragstart="onDragStart(event,' + JSON.stringify(val1).replace(/\"/g, "'") + ')" draggable="true">\n' +
-                    '                <i class="iconfont ' + val1.icon + '"></i>\n' +
-                    '            </a>';
-            });
-            _html += '</div>\n' +
-                '        </div>';
-        });
-        
-        $("#flex_tools").html(_html);
-        $('#returnLeft').click(() => {
-            
-            if((document.getElementById('pic_list').scrollLeft - 50) < 0){
-                document.getElementById('pic_list').scrollLeft = 0
-                
-            }else{
-                document.getElementById('pic_list').scrollLeft = document.getElementById('pic_list').scrollLeft - 50
-            }
-        })
-        $('#returnRight').click(() => {
-            
-            if((document.getElementById('pic_list').scrollLeft + 50) > document.getElementById('pic_list').scrollWidth){
-                document.getElementById('pic_list').scrollLeft = document.getElementById('pic_list').scrollWidth
-                
-            }else{
-                document.getElementById('pic_list').scrollLeft = document.getElementById('pic_list').scrollLeft + 50
-            }
-            
-        })
-        $("#menu_combine").css('display', "none");
-        $("#menu_unCombine").css('display', "block");
-        $("#menu_combine").attr('disabled', false);
-        $("#menu_unCombine").attr('disabled', true);
-
-        $("#menu_combine").css('display', "block");
-        $("#menu_unCombine").css('display', "none");
-        $("#menu_combine").attr('disabled', true);
-        $("#menu_unCombine").attr('disabled', false);
-        // 初始化canvas
-        var data = {
-            "nodes": [],
-            "lines": [],
-            "lineName": "curve",
-            "fromArrowType": "",
-            "toArrowType": "triangleSolid",
-            "scale": 1,
-            "locked": 0
-        };
-        var canvasOptions = {on: onMessage};
-        canvas = new Le5leTopology.Topology('topo_canvas', canvasOptions);
-        console.log(canvas)
-        // 监听画布
-        function onMessage(event, data) {
-            console.log(event, data);
-            switch (event) {
-                case 'node':
-                    selNodes = [data];
-                    selected = {
-                        "type": event,
-                        "data": data
-                    };
-                    locked = data.locked;
-                    self.initNode();
-                    break;
-                case 'line':
-                    selected = {
-                        "type": event,
-                        "data": data
-                    };
-                    locked = data.locked;
-                    self.initLine();
-                    break;
-                case 'multi':
-                    locked = true;
-                    if (data.nodes && data.nodes.length) {
-                        selNodes = data.nodes;
-                        for (var item in data.nodes) {
-                            if (!item.locked) {
-                                locked = false;
-                                break;
-                            }
-                        }
-                    }
-                    if (locked && data.lines) {
-                        for (var item in data.lines) {
-                            if (!item.locked) {
-                                locked = false;
-                                break;
-                            }
-                        }
-                    }
-                    selected = {
-                        "type": event,
-                        "data": data
-                    };
-                    break;
-                case 'space':
-                    $("#flex_props_home").removeClass("hidden");
-                    $("#flex_props_node").addClass("hidden");
-                    setTimeout(function () {
-                        selected = null;
-                        selNodes = null;
-                    });
-                    break;
-                case 'moveOut':
-                    this.workspace.nativeElement.scrollLeft += 10;
-                    this.workspace.nativeElement.scrollTop += 10;
-                    break;
-                case 'addNode':
-                    selNodes = [data];
-                    selected = {
-                        "type": event,
-                        "data": data
-                    };
-                    locked = data.locked;
-                    self.initNode();
-                    break;
-                case 'addLine':
+        $.ajax({
+            url:urlConfig.host+'/module/GetModuleGroup',
+            data:'',
+            success: function(data) {
+                console.log(data)
+                let str = ``
+                data.map(item => {
+                    str += `<li role="presentation" class="active-taps"><a href="#">${item}</a></li>`
+                })
+                console.log(str)
+                self.tools.forEach(function (val, index) {
+                    _html += '<div>\n' +
+                        '            <div class="title">' + 
+                        
+                        `<span id='returnLeft' class='lkr-arrow'>◀</span><div id='pic_list' class="lkr-pic_list"><ul class="lkr-tabs">
+                        <li role="presentation" class="active-taps" ><a href="#">基础模块</a></li>${str}
                     
-                    data.strokeStyle = '#4295ec'
-                    data.dash = 1
-                    // data.name = '"polyline"'
-                    console.log('11111111111',data)
-                    selected = {
-                        "type": event,
-                        "data": data
-                    };
-                    locked = data.locked;
-                    self.initLine();
-                    break;
-                case 'delete':
-                    $("#flex_props_home").removeClass("hidden");
-                    $("#flex_props_node").addClass("hidden");
-                    break;
-                // case 'resize':
-                //     if (!this.mouseMoving) {
-                //         this.mouseMoving = true;
-                //         this.workspace.nativeElement.scrollLeft = this.workspace.nativeElement.scrollWidth;
-                //         this.workspace.nativeElement.scrollTop = this.workspace.nativeElement.scrollHeight;
-                //         setTimeout(function() {
-                //             this.mouseMoving = false;
-                //         }, 2000);
-                //     }
-                //     break;
-                // case 'scale':
-                //     Store.set('scale', data);
-                //     break;
-                // case 'locked':
-                //     Store.set('locked', data);
-                //     break;
+                    </ul></div><span id='returnRight' class='lkr-arrow'>▶</span>` 
+                    
+                    + '</div>\n' +
+                        '            <div class="buttons"><div class=lkr-addModel onclick="addFrame()" style="cursor: pointer;">+</div>';
+                    val.children.forEach(function (val1, index1) {
+                        _html += '<a title="' + val1.name + '" ondragstart="onDragStart(event,' + JSON.stringify(val1).replace(/\"/g, "'") + ')" draggable="true">\n' +
+                            '                <i class="iconfont ' + val1.icon + '"></i>\n' +
+                            '            </a>';
+                    });
+                    _html += '</div>\n' +
+                        '        </div>';
+                });
+                
+                $("#flex_tools").html(_html);
+                $('#returnLeft').click(() => {
+                    
+                    if((document.getElementById('pic_list').scrollLeft - 50) < 0){
+                        document.getElementById('pic_list').scrollLeft = 0
+                        
+                    }else{
+                        document.getElementById('pic_list').scrollLeft = document.getElementById('pic_list').scrollLeft - 50
+                    }
+                })
+                $('#returnRight').click(() => {
+                    
+                    if((document.getElementById('pic_list').scrollLeft + 50) > document.getElementById('pic_list').scrollWidth){
+                        document.getElementById('pic_list').scrollLeft = document.getElementById('pic_list').scrollWidth
+                        
+                    }else{
+                        document.getElementById('pic_list').scrollLeft = document.getElementById('pic_list').scrollLeft + 50
+                    }
+                    
+                })
+                $("#menu_combine").css('display', "none");
+                $("#menu_unCombine").css('display', "block");
+                $("#menu_combine").attr('disabled', false);
+                $("#menu_unCombine").attr('disabled', true);
+
+                $("#menu_combine").css('display', "block");
+                $("#menu_unCombine").css('display', "none");
+                $("#menu_combine").attr('disabled', true);
+                $("#menu_unCombine").attr('disabled', false);
+                // 初始化canvas
+                var data = {
+                    "nodes": [],
+                    "lines": [],
+                    "lineName": "curve",
+                    "fromArrowType": "",
+                    "toArrowType": "triangleSolid",
+                    "scale": 1,
+                    "locked": 0
+                };
+                var canvasOptions = {on: onMessage};
+                canvas = new Le5leTopology.Topology('topo_canvas', canvasOptions);
+                console.log(canvas)
+                
+                // 监听画布
+                function onMessage(event, data) {
+                    console.log(event, data);
+                    switch (event) {
+                        case 'node':
+                            selNodes = [data];
+                            selected = {
+                                "type": event,
+                                "data": data
+                            };
+                            locked = data.locked;
+                            self.initNode();
+                            break;
+                        case 'line':
+                            selected = {
+                                "type": event,
+                                "data": data
+                            };
+                            locked = data.locked;
+                            self.initLine();
+                            break;
+                        case 'multi':
+                            locked = true;
+                            if (data.nodes && data.nodes.length) {
+                                selNodes = data.nodes;
+                                for (var item in data.nodes) {
+                                    if (!item.locked) {
+                                        locked = false;
+                                        break;
+                                    }
+                                }
+                            }
+                            if (locked && data.lines) {
+                                for (var item in data.lines) {
+                                    if (!item.locked) {
+                                        locked = false;
+                                        break;
+                                    }
+                                }
+                            }
+                            selected = {
+                                "type": event,
+                                "data": data
+                            };
+                            break;
+                        case 'space':
+                            $("#flex_props_home").removeClass("hidden");
+                            $("#flex_props_node").addClass("hidden");
+                            setTimeout(function () {
+                                selected = null;
+                                selNodes = null;
+                            });
+                            break;
+                        case 'moveOut':
+                            this.workspace.nativeElement.scrollLeft += 10;
+                            this.workspace.nativeElement.scrollTop += 10;
+                            break;
+                        case 'addNode':
+                            selNodes = [data];
+                            selected = {
+                                "type": event,
+                                "data": data
+                            };
+                            locked = data.locked;
+                            self.initNode();
+                            break;
+                        case 'addLine':
+                            
+                            data.strokeStyle = '#4295ec'
+                            data.dash = 1
+                            // data.name = '"polyline"'
+                            // console.log('11111111111',data)
+                            selected = {
+                                "type": event,
+                                "data": data
+                            };
+                            locked = data.locked;
+                            self.initLine();
+                            break;
+                        case 'delete':
+                            $("#flex_props_home").removeClass("hidden");
+                            $("#flex_props_node").addClass("hidden");
+                            break;
+                        // case 'resize':
+                        //     if (!this.mouseMoving) {
+                        //         this.mouseMoving = true;
+                        //         this.workspace.nativeElement.scrollLeft = this.workspace.nativeElement.scrollWidth;
+                        //         this.workspace.nativeElement.scrollTop = this.workspace.nativeElement.scrollHeight;
+                        //         setTimeout(function() {
+                        //             this.mouseMoving = false;
+                        //         }, 2000);
+                        //     }
+                        //     break;
+                        // case 'scale':
+                        //     Store.set('scale', data);
+                        //     break;
+                        // case 'locked':
+                        //     Store.set('locked', data);
+                        //     break;
+                    }
+
+                }
+
+                canvasOptions.on = onMessage;
+                canvas.open(data);
+                // canvas.updateProps();
+                // canvas.random();
             }
+        })    
 
-        }
-
-        canvasOptions.on = onMessage;
-        canvas.open(data);
-        // canvas.updateProps();
-        // canvas.random();
     },
     // 下载图片
     down_png: function () {
@@ -1501,6 +1520,13 @@ var Topology = {
         canvas.render(true);
     },
     // 删除
+    onRender: function () {
+        canvas.data.nodes = []
+        canvas.data.lines = []
+        canvas.render();
+        console.log(canvas)
+    },
+    // 删除
     onDelete: function () {
         canvas.delete();
     },
@@ -1549,6 +1575,7 @@ window.fillStyleChange = Topology.fillStyleChange;
 window.gradientFromColorChange = Topology.gradientFromColorChange;
 window.onChangeProp = Topology.onChangeProp;
 window.parsew = Topology.parsew;
+window.onRender = Topology.onRender;
 
 // window.bkTypeChange = Topology.bkTypeChange;
 // window.rechargeable = user.rechargeable;
