@@ -14,12 +14,12 @@ import java.util.List;
 public interface TableRoleService extends BaseService<TableRole,Integer> {
 
     /**
-     * 批量插入
+     * 文件导入
      * @param filePath 文件地址
      * @Author 王若山
      * @return
      */
-    boolean batchInsert(String filePath);
+    List<TableRole> leadByTxt(String filePath);
 
     /**
      * 拼装算法导出实体
