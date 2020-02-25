@@ -101,6 +101,14 @@ public class TableAlgorithm {
     private String remark;
 
     /**
+     * @Description 导入辅助字段
+     * @Author p.ww
+     * @Date 2020/2/25
+     **/
+    @ApiModelProperty(value = "导入辅助字段")
+    private Integer tno;
+
+    /**
      * 公式变量列表
      */
     @ApiModelProperty(hidden = true)
@@ -328,5 +336,13 @@ public class TableAlgorithm {
 
     public void setTableFuncList(List<TableFunc> tableFuncList) {
         this.tableFuncList = tableFuncList;
+    }
+
+    public Integer getTno() {
+        return tno;
+    }
+
+    public void setTno(Integer tno) {
+        this.tno = tno;
     }
 }

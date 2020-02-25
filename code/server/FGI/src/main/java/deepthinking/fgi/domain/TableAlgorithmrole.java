@@ -71,6 +71,12 @@ public class TableAlgorithmrole {
     private String remark;
 
     /**
+     * 导入辅助字段
+     */
+    @ApiModelProperty(value = "导入辅助字段")
+    private Integer tno;
+
+    /**
      * 算子模块
      */
     @ApiModelProperty(hidden = true)
@@ -240,5 +246,13 @@ public class TableAlgorithmrole {
 
     public void setTableAlgorithmconditionList(List<TableAlgorithmcondition> tableAlgorithmconditionList) {
         this.tableAlgorithmconditionList = tableAlgorithmconditionList;
+    }
+
+    public Integer getTno() {
+        return tno;
+    }
+
+    public void setTno(Integer tno) {
+        this.tno = tno;
     }
 }

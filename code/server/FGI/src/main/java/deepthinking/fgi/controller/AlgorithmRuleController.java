@@ -37,8 +37,8 @@ public class AlgorithmRuleController {
     @GetMapping("/readAlgorithmRuleFromFile")
     @ApiOperation(value = "04-01 导入算法规则", notes = "导入算法规则", httpMethod = "GET")
     @ApiImplicitParam(name = "filename", value = "文件路径", dataType = "string", paramType = "query", required = true)
-    public Boolean readAlgorithmRuleFromFile(String filename){
-        return tableRoleService.batchInsert(filename);
+    public List<TableRole> readAlgorithmRuleFromFile(String filename){
+        return tableRoleService.leadByTxt(filename);
     }
 
     @GetMapping("/saveAlgorithmRule2File")
