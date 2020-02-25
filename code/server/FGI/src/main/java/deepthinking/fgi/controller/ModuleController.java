@@ -18,7 +18,7 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("module")
-@Api(value = "01 模板操作API", description = "模板维护及操作页面相关接口")
+@Api(description = "01 模板操作API,模板维护及操作页面相关接口")
 public class ModuleController {
     @Resource
     private TableModuleService tableModuleService;

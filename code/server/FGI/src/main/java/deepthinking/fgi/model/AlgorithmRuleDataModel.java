@@ -9,7 +9,7 @@ import io.swagger.annotations.ApiModelProperty;
  * @Description:
  * @data 2020/2/24 12:25
  */
-@ApiModel(value = "算法规则总模型")
+@ApiModel(value = "算法规则总模型,包含算子相关信息交互数据模型，算子运行条件")
 public class AlgorithmRuleDataModel {
     @ApiModelProperty(value = "ID")
     private Integer id;

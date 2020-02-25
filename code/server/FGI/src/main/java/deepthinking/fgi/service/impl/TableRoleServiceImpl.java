@@ -3,8 +3,10 @@ package deepthinking.fgi.service.impl;
 import com.github.pagehelper.PageInfo;
 import deepthinking.fgi.dao.mapper.*;
 import deepthinking.fgi.domain.*;
+import deepthinking.fgi.model.AlgorithmModel;
 import deepthinking.fgi.model.AlgorithmRuleDataModel;
 import deepthinking.fgi.model.AlgorithmRuleSaveDataModel;
+import deepthinking.fgi.service.TableAlgorithmService;
 import deepthinking.fgi.service.TableRoleService;
 import deepthinking.fgi.util.FileUtils;
 import deepthinking.fgi.util.JsonListUtil;
@@ -37,6 +39,9 @@ public class TableRoleServiceImpl extends BaseServiceImpl<TableRole,Integer> imp
     private TableAlgorithmMapper tableAlgorithmMapper;
     @Resource
     private TableFuncMapper funcMapper;
+    @Resource
+    private TableAlgorithmService tableAlgorithmService;
+
 
     @Override
     public PageInfo<TableRole> pageFind(int pageNum, int pageSize, Object parameter) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
@@ -150,11 +155,34 @@ public class TableRoleServiceImpl extends BaseServiceImpl<TableRole,Integer> imp
         //获取规则本身信息
         TableRole tableRole=selectByPrimaryKey(Integer.parseInt(id));
         algorithmRuleSaveDataModel.setTableRole(tableRole);
+        List<AlgorithmRuleDataModel> data=new ArrayList<>();
         TableAlgorithmroleCriteria tableAlgorithmroleCriteria=new TableAlgorithmroleCriteria();
         tableAlgorithmroleCriteria.createCriteria().andRoleidEqualTo(Integer.parseInt(id));
         List<TableAlgorithmrole> tableAlgorithmroles=algorithmroleMapper.selectByExample(tableAlgorithmroleCriteria);
-
-        return null;
+        if(tableAlgorithmroles.size()>0){
+            tableAlgorithmroles.stream().forEach(algorithmrole->{
+                AlgorithmRuleDataModel algorithmRuleDataModel=new AlgorithmRuleDataModel();
+                algorithmRuleDataModel.setId(algorithmrole.getId());
+                algorithmRuleDataModel.setRoleId(algorithmrole.getRoleid());
+                algorithmRuleDataModel.setAlgorithmid(algorithmrole.getAlgorithmid());
+                algorithmRuleDataModel.setPrealgorithmid(algorithmrole.getPrealgorithmid());
+                algorithmRuleDataModel.setDes(algorithmrole.getDes());
+                algorithmRuleDataModel.setRemark(algorithmrole.getRemark());
+                //查询对应运行条件
+                TableAlgorithmconditionCriteria tableAlgorithmconditionCriteria=new TableAlgorithmconditionCriteria();
+                tableAlgorithmconditionCriteria.createCriteria().andAlgorithmroleidEqualTo(algorithmrole.getId());
+                TableAlgorithmcondition tableAlgorithmcondition=algorithmconditionMapper.selectByExample(tableAlgorithmconditionCriteria).get(0);
+                algorithmRuleDataModel.setTableAlgorithmcondition(tableAlgorithmcondition);
+                //查询算子信息
+                AlgorithmModel algorithmModel=tableAlgorithmService.getAlgorithmById(algorithmrole.getAlgorithmid().toString());
+                AlgorithmModel preAlgorithmModel=tableAlgorithmService.getAlgorithmById(algorithmrole.getPrealgorithmid().toString());
+                algorithmRuleDataModel.setAlgorithmModel(algorithmModel);
+                algorithmRuleDataModel.setPreaAlgorithmModel(preAlgorithmModel);
+                data.add(algorithmRuleDataModel);
+            });
+        }
+        algorithmRuleSaveDataModel.setAlgorithmRuleDataModelList(data);
+        return algorithmRuleSaveDataModel;
     }
 
     @Override

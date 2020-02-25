@@ -31,7 +31,7 @@ import java.util.UUID;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/operatorMaintenance")
-@Api(value = "03 算法基本维护操作API", description = "算法生成及操作页面相关接口")
+@Api( description = "03 算法基本维护操作API,算法生成及操作页面相关接口")
 public class AlgorithmController {
 
     @Resource

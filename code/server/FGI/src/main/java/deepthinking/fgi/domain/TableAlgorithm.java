@@ -103,6 +103,7 @@ public class TableAlgorithm {
     /**
      * 公式变量列表
      */
+    @ApiModelProperty(hidden = true)
     private List<TableFunc> tableFuncList;
 
     /**

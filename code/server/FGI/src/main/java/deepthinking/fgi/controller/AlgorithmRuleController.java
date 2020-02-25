@@ -27,7 +27,7 @@ import java.util.UUID;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/algorithmRule")
-@Api(value = "04 算法规则编辑和导入导出操作API", description = "算法规则操作页面等相关接口")
+@Api( description = "04 算法规则编辑和导入导出操作API,算法规则操作页面等相关接口")
 public class AlgorithmRuleController {
 
     @Resource

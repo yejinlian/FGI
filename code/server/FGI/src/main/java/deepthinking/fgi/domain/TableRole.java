@@ -3,7 +3,6 @@ package deepthinking.fgi.domain;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-import java.beans.Transient;
 import java.util.List;
 
 /**
