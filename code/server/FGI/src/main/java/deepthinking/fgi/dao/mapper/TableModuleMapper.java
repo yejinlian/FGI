@@ -161,7 +161,7 @@ public interface TableModuleMapper {
     int updateByPrimaryKey(TableModule record);
 
     @Select({
-            "select DISTINCT ModuleName from table_module"
+            "select DISTINCT ModuleGroup from table_module"
     })
     List<String> GetModuleGroup();
 
