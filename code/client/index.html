@@ -41,8 +41,26 @@
     </style>
 </head>
 <body>
+    <div class="lkr-frame" id='lkrFrameDel'>
+        <div class="lkr-frame-div" style="height: 150px;">
+            <!-- <div class="lkr-frame-tilte">
+                删除
+                <span style="cursor: pointer;" onclick='lkrFrameDelClose()'>x</span>
+            </div> -->
+            <div class="lkr-frame-content">
+                <h3>
+                    确认删除?
+                </h3>
+                
+            </div>
+            <div class="lkr-frame-foot">
+                <div class="lkr-button" onclick='ConfirmDel()' style="margin-right: 10px;">确定</div>
+                <div class="lkr-button" onclick='lkrFrameDelClose()'>取消</div>
+            </div>
+        </div>
+    </div>
     <div class="lkr-frame" id='lkrFrame'>
-        <div class="lkr-frame-div">
+        <div class="lkr-frame-div" style="height: 400px;">
             <div class="lkr-frame-tilte">
                 新建参数模板
                 <span style="cursor: pointer;" onclick='lkrFrameClose()'>x</span>
@@ -63,7 +81,7 @@
                     </select> -->
                 </div>
                 <div style="margin: 15px 0;display: flex;align-items: center;">
-                    <label style="line-height: 10px;width: 100px;">备注：</label>
+                    <label style="line-height: 10px;width: 100px;">描述：</label>
                     <textarea  type='text' id='mouldRemark' class="lkr-input" style="flex:1;margin-left: 10px;"></textarea>
                     <!-- <select class="lkr-select" style="flex: 1;">
                         <option>信号产生模板类型</option>
@@ -1174,12 +1192,60 @@
 
 <script src="topology/topology_es5.js"></script>
 <script>
-    let bigData = {
-        mouldParam:[]
+    window.bigData = {
+        mouldParam:[],
+        actionTab:'基础模块',
+        delmoduleId:'',
+        editmoduleId:'',
+        frameType:'add',
+        editmoduledata:[]
     }
+    $('body').on('click','.lkr-list-edit',(e) => {
+        window.bigData.frameType = 'edit'
+        window.bigData.editmoduleId = $(e.target).data('id')
+        $('#lkrFrame').fadeToggle(500)
+        $.ajax({
+            url:urlConfig.host+'/module/getModuleById',
+            data:{moduleId:window.bigData.editmoduleId},
+            success: function(data) {
+                // $('#addMb tbody').html('')
+                $("#mouldName").val(data.modulename)
+                $("#modulegroup").val(data.modulegroup)
+                $("#mouldRemark").val(data.des)
+                window.bigData.editmoduleId = data.id
+                $.ajax({
+                    url:urlConfig.host+'/module/findAllTableFromDB',
+                    data:'',
+                    success: function(datas) {
+                        let str = '<option>请选择</option>'
+                        datas.map(item => {
+                            if(data.tab == item){
+                                str += `<option selected>${item}</option>`
+                            }else{
+                                str += `<option>${item}</option>`
+                            }
+                            
+                        })
+                        fgiNameChangeedit(data.tab,data.modulefields)
+                        $("#fgiName").html(str)
+                        
+
+                    }
+                })
+                $("#modulegroup").prop('disabled',true)
+            }
+        })
+    })
     function addFrame(){
+        window.bigData.frameType = 'add'
         // copnsole
         $('#lkrFrame').fadeToggle(500)
+        if(window.bigData.actionTab != '基础模块'){
+            $("#modulegroup").val(window.bigData.actionTab)
+            $("#modulegroup").prop('disabled',true)
+        }else{
+            $("#modulegroup").prop('disabled',false)
+        }
         $.ajax({
             url:urlConfig.host+'/module/findAllTableFromDB',
             data:'',
@@ -1194,6 +1260,31 @@
             }
         })
     }
+    function fgiNameChangeedit(name,datas){
+        $.ajax({
+            url:urlConfig.host+'/module/findAllFiledByTableName',
+            data:{
+                tableName:name
+            },
+            success: function(data) {
+                window.bigData.mouldParam = data
+                let thStr = ''
+                data.map(item => {
+                    thStr += `<tr><td><input id='${'chk'+item.COLUMN_NAME}' type="checkbox" name="item" data-id='${item.COLUMN_NAME}'/></td>
+                    <td>${item.COLUMN_NAME?item.COLUMN_NAME:''}</td>
+                    <td>${item.COLUMN_COMMENT?item.COLUMN_COMMENT:''}</td>
+                    <td>${item.COLUMN_TYPE?item.COLUMN_TYPE:''}</td>
+                    <td>${item.LENGTH?item.LENGTH:''}</td>
+                    <td>${item.IS_NULLABLE?item.IS_NULLABLE:''}</td></tr>`
+                })
+                $('#addMb tbody').html(thStr)
+                window.bigData.editmoduledata = datas
+                datas.map(item => {
+                    $('#chk'+item.fieldname).prop('checked',true)
+                })
+            }
+        })
+    }
     function fgiNameChange(){
         $("#fgiName").change((e) => {
             
@@ -1203,7 +1294,7 @@
                     tableName:$(e.target).val()
                 },
                 success: function(data) {
-                    bigData.mouldParam = data
+                    window.bigData.mouldParam = data
                     let thStr = ''
                     data.map(item => {
                         thStr += `<tr><td><input type="checkbox" name="item" data-id='${item.COLUMN_NAME}'/></td>
@@ -1230,76 +1321,173 @@
             });
         }
     }
+    function lkrFrameDelClose(){
+        $('#lkrFrameDel').fadeToggle(500)
+    }
     function lkrFrameClose(){
         reseAddMb()
         $('#lkrFrame').fadeToggle(500)
     }
     function Confirm(){
+        // console.log($("#modulegroup").val())
+        // return
+        
         let mouldParam = []
         $("input:checkbox[name='item']").each((i,v) => {
             let items = $(v)
             if(items.prop('checked')){
                 
-                bigData.mouldParam.map(item => {
+                window.bigData.mouldParam.map(item => {
                     if(items.data('id') == item.COLUMN_NAME){
-                        mouldParam.push(item)
+                        mouldParam.push({
+                            fieldname:item.COLUMN_NAME,
+                            fieldtype:item.COLUMN_TYPE,
+                            // id:null,
+                            // moduleid:null,
+                            // remark:null
+                        })
                     }
                 })
             }
         })
-
-        let param = {
-            modulegroup:'新模版组',
-            modulename:$("#mouldName").val(),
-            modulefields:JSON.stringify(mouldParam),
-            mouldRemark:$("#mouldRemark").val(),
-        }
-        console.log(param)
-        // $.ajax({
-        //     url:urlConfig.host+'/module/addModule',
-        //     type:'post',
-        //     data:param,
-        //     success: function(data) {
-        //         console.log(data)
-                window.addModel({
-                    name: 'rectangle',
-                    icon: 'icon-rectangle',
-                    data: {
-                        text: $("#mouldName").val(),
-                        rect: {
-                            width: 200,
-                            height: 50
-                        },
-                        font: {
-                            fontFamily: 'Arial',
-                            color: 'aqua',
-                        
-                            textBaseline: 'top'
-                        },
-                        paddingLeft: 10,
-                        paddingRight: 10,
-                        paddingTop: 10,
-                        paddingBottom: 10,
-                        borderRadius: 0.1,
-                        name: 'rectangle',
-                        fillStyle:'rgba(4,44,98,0.58)',
-                        strokeStyle: '#4295ec',
-                        // image:'./static/mum1.png'
+        if(window.bigData.frameType == 'add'){
+            let param = {
+                modulegroup:$("#modulegroup").val(),
+                modulename:$("#mouldName").val(),
+                modulefields:mouldParam,
+                des:$("#mouldRemark").val(),
+                tab:$('#fgiName').val() == '请选择'?'':$('#fgiName').val(),
+                // sqlurl:null,
+                remark:'',
+                // id:null
+            }
+            console.log(param)
+            $.ajax({
+                url:urlConfig.host+'/module/addModule',
+                type:'post',
+                dataType: 'json',
+                data:JSON.stringify(param),
+                contentType: "application/json;charset=UTF-8",//指定消息请求类型
+                success: function(data) {
+                    reseTabsList()
+                    reseTabs()
+                    reseAddMb()
+                    $('#lkrFrame').fadeToggle(500)
+                }
+                    
+            })
+        }else{
+            mouldParam.map(obj => {
+                window.bigData.editmoduledata.map(item => {
+                    if(obj.fieldname == item.fieldname){
+                        obj.id = item.id
+                        obj.moduleid = item.moduleid
+                        obj.remark = item.remark
                     }
                 })
-                reseAddMb()
-                $('#lkrFrame').fadeToggle(500)
-        //     }
-                
-        // })
+            })
+            
+            let param = {
+                id:window.bigData.editmoduleId,
+                modulegroup:$("#modulegroup").val(),
+                modulename:$("#mouldName").val(),
+                modulefields:mouldParam,
+                des:$("#mouldRemark").val(),
+                tab:$('#fgiName').val() == '请选择'?'':$('#fgiName').val(),
+                // sqlurl:null,
+                remark:'',
+                // id:null
+            }
+            console.log(param)
+            $.ajax({
+                url:urlConfig.host+'/module/modModuleById',
+                type:'post',
+                dataType: 'json',
+                data:JSON.stringify(param),
+                contentType: "application/json;charset=UTF-8",//指定消息请求类型
+                success: function(data) {
+                    reseTabsList()
+                    reseTabs()
+                    reseAddMb()
+                    $('#lkrFrame').fadeToggle(500)
+                }
+                    
+            })
+        }
         
+        
+    }
+    function reseTabs(){
+        $.ajax({
+            url:urlConfig.host+'/module/GetModuleGroup',
+            data:'',
+            success: function(data) {
+                $("#pic_list li a").each((i,v) => {
+                    console.log($(v).html())
+                })
+            }
+        })
     }
     function reseAddMb(){
         $('#addMb tbody').html('')
         $("#mouldName").val('')
         $("#modulegroup").val('')
+        $("#mouldRemark").val('')
+        $("#modulegroup").prop('disabled',false)
         $("input:checkbox[name='item']").each((i,v) => {
             $(v).prop('checked',false)
+        })
+    }
+    function reseTabsList(){
+        $.ajax({
+            url:urlConfig.host+'/module/GetModuleByGroupName',
+            data:{moduleGroupName:window.bigData.actionTab},
+            success: function(data) {
+                $(".left-list").remove()
+                data.map(item => {
+                    window.addModel({
+                        name: 'rectangle',
+                        icon: 'icon-rectangle',
+                        id:item.id,
+                        data: {
+                            id:item.id,
+                            text: item.modulename,
+                            rect: {
+                                width: 200,
+                                height: 50
+                            },
+                            font: {
+                                fontFamily: 'Arial',
+                                color: 'aqua',
+                            
+                                textBaseline: 'top'
+                            },
+                            paddingLeft: 10,
+                            paddingRight: 10,
+                            paddingTop: 10,
+                            paddingBottom: 10,
+                            borderRadius: 0.1,
+                            name: 'rectangle',
+                            fillStyle:'rgba(4,44,98,0.58)',
+                            strokeStyle: '#4295ec',
+                            // image:'./static/mum1.png'
+                        }
+                    })
+                })
+            }
+        })
+    }
+    function ConfirmDel(){
+        $.ajax({
+            url:urlConfig.host+'/module/delModuleById',
+            data:{moduleId:window.bigData.delmoduleId},
+            success: function(data) {
+                if(data){
+                    window.bigData.delmoduleId = ''
+                    reseTabsList()
+                    $('#lkrFrameDel').fadeToggle(500)
+                }
+            }
         })
     }
 </script>

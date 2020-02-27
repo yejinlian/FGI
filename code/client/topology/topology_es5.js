@@ -920,8 +920,8 @@ var Topology = {
         $("#flex_tools").append(`<div class="left-list" ondragstart="onDragStart(event,${JSON.stringify(option).replace(/\"/g, "'")})" draggable="true">
                                 <div class="left-list-tilte">${option.data.text}</div>
                                 <div class="left-list-event">
-                                    <div class='lkr-edit'>编辑模板</div>
-                                    <div class='lkr-del'>删除模板</div>
+                                    <div class='lkr-list-edit lkr-edit' data-id='${option.data.id}' >编辑模板</div>
+                                    <div class='lkr-list-del lkr-del' data-id='${option.data.id}' >删除模板</div>
                                 </div>
                             </div>`);
     },
@@ -945,7 +945,7 @@ var Topology = {
                 console.log(data)
                 let str = ``
                 data.map(item => {
-                    str += `<li role="presentation" class="active-taps"><a href="#">${item}</a></li>`
+                    str += `<li role="presentation" class="active-taps" data-name='${item}' >${item}</li>`
                 })
                 console.log(str)
                 self.tools.forEach(function (val, index) {
@@ -953,7 +953,7 @@ var Topology = {
                         '            <div class="title">' + 
                         
                         `<span id='returnLeft' class='lkr-arrow'>◀</span><div id='pic_list' class="lkr-pic_list"><ul class="lkr-tabs">
-                        <li role="presentation" class="active-taps" ><a href="#">基础模块</a></li>${str}
+                        <li role="presentation" class="active-taps" data-name='基础模块' >基础模块</li>${str}
                     
                     </ul></div><span id='returnRight' class='lkr-arrow'>▶</span>` 
                     
