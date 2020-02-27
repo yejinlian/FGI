@@ -27,7 +27,7 @@ import java.util.UUID;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/algorithmRule")
-@Api(value = "04 算法规则编辑和导入导出操作API", description = "算法规则操作页面等相关接口")
+@Api( description = "04 算法规则编辑和导入导出操作API,算法规则操作页面等相关接口")
 public class AlgorithmRuleController {
 
     @Resource
@@ -37,8 +37,8 @@ public class AlgorithmRuleController {
     @GetMapping("/readAlgorithmRuleFromFile")
     @ApiOperation(value = "04-01 导入算法规则", notes = "导入算法规则", httpMethod = "GET")
     @ApiImplicitParam(name = "filename", value = "文件路径", dataType = "string", paramType = "query", required = true)
-    public Boolean readAlgorithmRuleFromFile(String filename){
-        return tableRoleService.batchInsert(filename);
+    public List<TableRole> readAlgorithmRuleFromFile(String filename){
+        return tableRoleService.leadByTxt(filename);
     }
 
     @GetMapping("/saveAlgorithmRule2File")

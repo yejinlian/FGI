@@ -8,6 +8,7 @@
 package deepthinking.fgi.util;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -19,6 +20,8 @@ import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static javax.xml.transform.OutputKeys.ENCODING;
 
 public class FileUtils {
 	public static String readGzipFile(String targzFile) {
@@ -83,28 +86,52 @@ public class FileUtils {
 	}
 
 	/**
-	 * 读取txt文件内容,有效防止io阻塞
-	 * @param filePath
+	 * 读文件
+	 *
+	 * @param filePath 读取文件路径
+	 * @return 返回字符串
 	 * @author 王若山
-	 * @return
 	 */
 	public static String readTxtFile(String filePath) {
-		String content = null;
-		try (Reader reader = new InputStreamReader(new FileInputStream(filePath), "GBK")) {
-			StringBuffer sb = new StringBuffer();
-			char[] tempchars = new char[1024];
-			while (reader.read(tempchars) != -1) {
-				sb.append(tempchars);
-			}
-			content = sb.toString();
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+		File file = new File(filePath);
+		if (!file.exists()) {
+			return null;
 		}
-		return content;
+		StringBuffer stringBuffer = null;
+		BufferedReader bufferedReader = null;
+		try {
+			bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "GBK"));
+			stringBuffer = new StringBuffer();
+			String line = null;
+			while ((line = bufferedReader.readLine()) != null) {
+				if ("\r".equals(line)) {
+					continue;
+				}
+				stringBuffer.append(line).append("\n");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			closeBufferedReader(bufferedReader);
+		}
+		return stringBuffer.toString();
+	}
+
+	/**
+	 * 关闭文件流
+	 *
+	 * @author Lius
+	 * @date 2018/10/26 16:32
+	 */
+	public static void closeBufferedReader(BufferedReader bufferedReader) {
+		if (bufferedReader != null) {
+			try {
+				bufferedReader.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	/**

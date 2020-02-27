@@ -1,21 +1,28 @@
 package deepthinking.fgi.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import deepthinking.fgi.dao.mapper.*;
 import deepthinking.fgi.domain.*;
+import deepthinking.fgi.model.AlgorithmModel;
 import deepthinking.fgi.model.AlgorithmRuleDataModel;
 import deepthinking.fgi.model.AlgorithmRuleSaveDataModel;
+import deepthinking.fgi.service.TableAlgorithmService;
 import deepthinking.fgi.service.TableRoleService;
 import deepthinking.fgi.util.FileUtils;
 import deepthinking.fgi.util.JsonListUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author jagoLyu
@@ -37,6 +44,9 @@ public class TableRoleServiceImpl extends BaseServiceImpl<TableRole,Integer> imp
     private TableAlgorithmMapper tableAlgorithmMapper;
     @Resource
     private TableFuncMapper funcMapper;
+    @Resource
+    private TableAlgorithmService tableAlgorithmService;
+
 
     @Override
     public PageInfo<TableRole> pageFind(int pageNum, int pageSize, Object parameter) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
@@ -44,18 +54,83 @@ public class TableRoleServiceImpl extends BaseServiceImpl<TableRole,Integer> imp
     }
 
     /**
-     * 批量插入
+     * 文件导入
      * @param filePath 文件地址
      * @Author 王若山
      * @return
      */
     @Override
-    public boolean batchInsert(String filePath) {
+    @Transactional(rollbackFor = Exception.class)
+    public List<TableRole> leadByTxt(String filePath) {
+        List<TableRole> roleList = null;
+        List<TableAlgorithmrole> algorithmroleList = null;
+        List<TableAlgorithm> algorithmList = null;
         try{
-            roleMapper.batchInsert(JsonListUtil.jsonToList(FileUtils.readTxtFile(filePath), TableRole.class));
-            return true;
+            String str = FileUtils.readTxtFile(filePath);
+            Map map = (Map) JSON.parse(str);
+            roleList = ((JSONArray) map.get("Role")).toJavaList(TableRole.class);
+            algorithmroleList = ((JSONArray) map.get("AlgorithmRole")).toJavaList(TableAlgorithmrole.class);
+            algorithmList = ((JSONArray) map.get("Algorithm")).toJavaList(TableAlgorithm.class);
+            //算法规则
+            roleList.forEach(role ->{
+                roleMapper.insert(role);
+            });
+            //算子模块
+            algorithmList.forEach(algorithm ->{
+                tableAlgorithmMapper.insert(algorithm);
+            });
+            //算法算子关系
+            List<TableRole> finalRoleList = roleList;
+            List<TableAlgorithm> finalAlgorithmList = algorithmList;
+            List<TableAlgorithmrole> finalAlgorithmroleList = algorithmroleList;
+            algorithmroleList.forEach(algorithmrole ->{
+                finalRoleList.forEach(role ->{
+                    if(algorithmrole.getRoleid().intValue() == role.getTno().intValue()){
+                        algorithmrole.setRoleid(role.getId());
+                    }
+                });
+                finalAlgorithmList.forEach(algorithm ->{
+                    if(algorithmrole.getAlgorithmid().intValue() == algorithm.getTno().intValue()){
+                        algorithmrole.setAlgorithmid(algorithm.getId());
+                    }
+                });
+                Integer id = algorithmroleMapper.selectMaxId();
+                if(null == id){
+                    id = 0;
+                }
+                algorithmrole.setId(++id);
+                algorithmroleMapper.insert(algorithmrole);
+            });
+
+            finalRoleList.forEach(role ->{
+                List<TableAlgorithmrole> childrenList = new ArrayList<TableAlgorithmrole>();
+                finalAlgorithmroleList.forEach(algorithmrole ->{
+                    if(algorithmrole.getRoleid().intValue() == role.getId().intValue()){
+                        childrenList.add(algorithmrole);
+                    }
+                    finalAlgorithmList.forEach(algorithm ->{
+                        if(algorithmrole.getAlgorithmid().intValue() == algorithm.getId().intValue()){
+                            algorithmrole.setTableAlgorithm(algorithm);
+                        }
+                    });
+                });
+                role.setTableAlgorithmroleList(childrenList);
+            });
+            return roleList;
         }catch (Exception e){
-            return false;
+            //手动回滚
+            roleList.forEach(role ->{
+                roleMapper.deleteByPrimaryKey(role.getId());
+            });
+            //算子模块
+            algorithmList.forEach(algorithm ->{
+                tableAlgorithmMapper.deleteByPrimaryKey(algorithm.getId());
+            });
+            algorithmroleList.forEach(algorithmrole ->{
+                algorithmroleMapper.deleteByPrimaryKey(algorithmrole.getId());
+            });
+            System.out.println(e.getMessage());
+            return null;
         }
     }
 
@@ -141,39 +216,100 @@ public class TableRoleServiceImpl extends BaseServiceImpl<TableRole,Integer> imp
     }
 
     @Override
-    public AlgorithmRuleSaveDataModel getAlgorithmRuleById(String Id) {
-        return null;
+    public AlgorithmRuleSaveDataModel getAlgorithmRuleById(String id) {
+        if(id==null||"".equals(id)){
+            logger.warn("查询规则详细信息传入的规则ID不能为空");
+            return null;
+        }
+        AlgorithmRuleSaveDataModel algorithmRuleSaveDataModel=new AlgorithmRuleSaveDataModel();
+        //获取规则本身信息
+        TableRole tableRole=selectByPrimaryKey(Integer.parseInt(id));
+        algorithmRuleSaveDataModel.setTableRole(tableRole);
+        List<AlgorithmRuleDataModel> data=new ArrayList<>();
+        TableAlgorithmroleCriteria tableAlgorithmroleCriteria=new TableAlgorithmroleCriteria();
+        tableAlgorithmroleCriteria.createCriteria().andRoleidEqualTo(Integer.parseInt(id));
+        List<TableAlgorithmrole> tableAlgorithmroles=algorithmroleMapper.selectByExample(tableAlgorithmroleCriteria);
+        if(tableAlgorithmroles.size()>0){
+            tableAlgorithmroles.stream().forEach(algorithmrole->{
+                AlgorithmRuleDataModel algorithmRuleDataModel=new AlgorithmRuleDataModel();
+                algorithmRuleDataModel.setId(algorithmrole.getId());
+                algorithmRuleDataModel.setRoleId(algorithmrole.getRoleid());
+                algorithmRuleDataModel.setAlgorithmid(algorithmrole.getAlgorithmid());
+                algorithmRuleDataModel.setPrealgorithmid(algorithmrole.getPrealgorithmid());
+                algorithmRuleDataModel.setDes(algorithmrole.getDes());
+                algorithmRuleDataModel.setRemark(algorithmrole.getRemark());
+                //查询对应运行条件
+                TableAlgorithmconditionCriteria tableAlgorithmconditionCriteria=new TableAlgorithmconditionCriteria();
+                tableAlgorithmconditionCriteria.createCriteria().andAlgorithmroleidEqualTo(algorithmrole.getId());
+                TableAlgorithmcondition tableAlgorithmcondition=algorithmconditionMapper.selectByExample(tableAlgorithmconditionCriteria).get(0);
+                algorithmRuleDataModel.setTableAlgorithmcondition(tableAlgorithmcondition);
+                //查询算子信息
+                AlgorithmModel algorithmModel=tableAlgorithmService.getAlgorithmById(algorithmrole.getAlgorithmid().toString());
+                AlgorithmModel preAlgorithmModel=tableAlgorithmService.getAlgorithmById(algorithmrole.getPrealgorithmid().toString());
+                algorithmRuleDataModel.setAlgorithmModel(algorithmModel);
+                algorithmRuleDataModel.setPreaAlgorithmModel(preAlgorithmModel);
+                data.add(algorithmRuleDataModel);
+            });
+        }
+        algorithmRuleSaveDataModel.setAlgorithmRuleDataModelList(data);
+        return algorithmRuleSaveDataModel;
     }
 
     @Override
     public boolean saveAlgorithmRule(AlgorithmRuleSaveDataModel algorithmRuleSaveDataModel) {
-        TableRole tableRole=algorithmRuleSaveDataModel.getTableRole();
-        if(tableRole!=null){
-            insert(tableRole);
-            //获取主键
-            int id=getPrimaryKey(tableRole);
-            List<AlgorithmRuleDataModel> algorithmRuleDataModels=algorithmRuleSaveDataModel.getAlgorithmRuleDataModelList();
-            if(algorithmRuleDataModels.size()>0){
-                algorithmRuleDataModels.stream().forEach(data->{
-                    data.setRoleId(id);
-                    this.saveAlgorithmRuleOne(data);
-                });
+        try {
+            TableRole tableRole=algorithmRuleSaveDataModel.getTableRole();
+            if(tableRole!=null){
+                insert(tableRole);
+                //获取主键
+                int id=getTableRolePrimaryKey(tableRole);
+                List<AlgorithmRuleDataModel> algorithmRuleDataModels=algorithmRuleSaveDataModel.getAlgorithmRuleDataModelList();
+                if(algorithmRuleDataModels.size()>0){
+                    algorithmRuleDataModels.stream().forEach(data->{
+                        data.setRoleId(id);
+                        this.saveAlgorithmRuleOne(data);
+                    });
+                }
             }
-
+            return true;
+        }catch (Exception e){
+            logger.error(e.getMessage());
+            return false;
         }
-
-        return false;
     }
     /*
     获取主键
      */
-    private int getPrimaryKey(TableRole tableRole){
-        return 0;
+    private int getTableRolePrimaryKey(TableRole tableRole){
+        TableRoleCriteria tableRoleCriteria=new TableRoleCriteria();
+        tableRoleCriteria.createCriteria().andRolenameEqualTo(tableRole.getRolename()).andDesEqualTo(tableRole.getDes()).andRemarkEqualTo(tableRole.getRemark());
+        tableRole=roleMapper.selectByExample(tableRoleCriteria).get(0);
+        return tableRole.getId();
+    }
+    private int getTableAlgorithmrole(TableAlgorithmrole tableAlgorithmrole){
+        TableAlgorithmroleCriteria tableAlgorithmroleCriteria=new TableAlgorithmroleCriteria();
+        tableAlgorithmroleCriteria.createCriteria().andRoleidEqualTo(tableAlgorithmrole.getRoleid()).andAlgorithmidEqualTo(tableAlgorithmrole.getAlgorithmid())
+                .andPrealgorithmidEqualTo(tableAlgorithmrole.getPrealgorithmid()).andDesEqualTo(tableAlgorithmrole.getDes()).andRemarkEqualTo(tableAlgorithmrole.getRemark());
+        tableAlgorithmrole=algorithmroleMapper.selectByExample(tableAlgorithmroleCriteria).get(0);
+        return tableAlgorithmrole.getId();
     }
 
     @Override
     public boolean saveAlgorithmRuleOne(AlgorithmRuleDataModel algorithmRuleDataModel) {
-        return false;
+        try {
+            TableAlgorithmrole tableAlgorithmrole=fill(algorithmRuleDataModel);
+            algorithmroleMapper.insert(tableAlgorithmrole);
+            int id=getTableAlgorithmrole(tableAlgorithmrole);
+            TableAlgorithmcondition tableAlgorithmcondition=algorithmRuleDataModel.getTableAlgorithmcondition();
+            if(tableAlgorithmcondition!=null){
+                tableAlgorithmcondition.setAlgorithmroleid(id);
+                algorithmconditionMapper.insert(tableAlgorithmcondition);
+            }
+            return true;
+        }catch (Exception e){
+            logger.error(e.getMessage());
+            return false;
+        }
     }
 
     @Override
@@ -181,9 +317,29 @@ public class TableRoleServiceImpl extends BaseServiceImpl<TableRole,Integer> imp
         return insert(tableRole)==1;
     }
 
+    private TableAlgorithmrole fill(AlgorithmRuleDataModel algorithmRuleDataModel){
+        TableAlgorithmrole tableAlgorithmrole=new TableAlgorithmrole();
+        tableAlgorithmrole.setId(algorithmRuleDataModel.getId());
+        tableAlgorithmrole.setRoleid(algorithmRuleDataModel.getRoleId());
+        tableAlgorithmrole.setAlgorithmid(algorithmRuleDataModel.getAlgorithmid());
+        tableAlgorithmrole.setPrealgorithmid(algorithmRuleDataModel.getPrealgorithmid());
+        return tableAlgorithmrole;
+    }
+
     @Override
     public boolean modAlgorithmRule(AlgorithmRuleDataModel algorithmRuleDataModel) {
-        return false;
+        try {
+            TableAlgorithmrole tableAlgorithmrole=fill(algorithmRuleDataModel);
+            algorithmroleMapper.updateByPrimaryKeySelective(tableAlgorithmrole);
+            TableAlgorithmcondition tableAlgorithmcondition=algorithmRuleDataModel.getTableAlgorithmcondition();
+            if(tableAlgorithmcondition!=null){
+                algorithmconditionMapper.updateByPrimaryKeySelective(tableAlgorithmcondition);
+            }
+            return true;
+        }catch (Exception e){
+            logger.error(e.getMessage());
+            return false;
+        }
     }
 
     @Override

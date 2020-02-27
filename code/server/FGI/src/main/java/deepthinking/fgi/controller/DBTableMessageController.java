@@ -21,7 +21,7 @@ import java.util.Map;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("module")
-@Api(value = "02 获取连接数据库表相关信息API", description = "模板维护及操作页面相关接口")
+@Api(description = "02 获取连接数据库表相关信息API,模板维护及操作页面相关接口")
 public class DBTableMessageController {
     @Resource
     private TableModuleService tableModuleService;
