@@ -125,13 +125,16 @@ public class TableModuleServiceImpl extends BaseServiceImpl<TableModule,Integer>
                     }
                     if(iterator.hasNext()){
                         for(TableModulefield old_field:old_data){
+                            boolean falg=true;
                             while (iterator.hasNext()){
                                 TableModulefield field=iterator.next();
                                 if(old_field.getId()==field.getId()){
+                                    falg=false;
                                     continue;
-                                }else {
-                                    del_data.add(old_field);
                                 }
+                            }
+                            if(falg){
+                                del_data.add(old_field);
                             }
                         }
                     }
