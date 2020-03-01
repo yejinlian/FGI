@@ -915,9 +915,15 @@ var Topology = {
             // $('#table').DataTable().ajax.reload();
         });
     },
+    addAlgorithm(option){
+        $("#algorithmMde").append(`<div class="left-list" ondragstart="onDragStart(event,${JSON.stringify(option).replace(/\"/g, "'")})" draggable="true">
+            <div class="left-list-tilte">${option.data.text}</div>
+          
+        </div>`);
+    },
     addModel(option){
         
-        $("#flex_tools").append(`<div class="left-list" ondragstart="onDragStart(event,${JSON.stringify(option).replace(/\"/g, "'")})" draggable="true">
+        $("#mouldPage").append(`<div class="left-list"  >
                                 <div class="left-list-tilte">${option.data.text}</div>
                                 <div class="left-list-event">
                                     <div class='lkr-list-edit lkr-edit' data-id='${option.data.id}' >编辑模板</div>
@@ -949,8 +955,8 @@ var Topology = {
                 })
                 console.log(str)
                 self.tools.forEach(function (val, index) {
-                    _html += '<div>\n' +
-                        '            <div class="title">' + 
+                    _html += '<div id="mouldPage" class="lkr-page">\n' +
+                        '            <div class="title" style="margin-top:0px">' + 
                         
                         `<span id='returnLeft' class='lkr-arrow'>◀</span><div id='pic_list' class="lkr-pic_list"><ul class="lkr-tabs">
                         <li role="presentation" class="active-taps" data-name='基础模块' >基础模块</li>${str}
@@ -967,7 +973,23 @@ var Topology = {
                     _html += '</div>\n' +
                         '        </div>';
                 });
-                
+                let algorithm = `<div id="algorithmPage"  style='display:none;'>
+                        <div class='algorithmTilte' >
+                            <input type='text'  class="lkr-input" style="flex:1;margin: auto;"/>
+                        </div>
+                    
+                        <div id="algorithmMde" class='lkr-page'></div>
+                        <div class="algorithmFoot">
+                            <div id='getAllMb'>可用模板</div>
+                            <div id='getAllSz'>已有算子</div>
+                        </div>
+                    </div>`
+                _html = `<div  class="lkr-pic_list"><ul class="lkr-tabs">
+                <li role="presentation" class="active-taps" data-name='模板管理' >模板管理</li>
+                <li role="presentation" class="active-taps" data-name='模板管理' >算子管理</li>
+                <li role="presentation" class="active-taps" data-name='模板管理' >规则管理</li>
+            
+            </ul></div>` + _html +algorithm
                 $("#flex_tools").html(_html);
                 $('#returnLeft').click(() => {
                     
@@ -1074,6 +1096,11 @@ var Topology = {
                                 "type": event,
                                 "data": data
                             };
+                            let nodeId = data.id
+                            if(nodeId.indexOf('模板') != -1){
+                                alert('新建算子')
+                            }
+                            
                             locked = data.locked;
                             self.initNode();
                             break;
@@ -1552,6 +1579,7 @@ var Topology = {
     },
 };
 // window全局，这样别的地方方便调用
+window.addAlgorithm = Topology.addAlgorithm;
 window.addModel = Topology.addModel;
 window.onDragStart = Topology.onDragStart;
 window.onTop = Topology.onTop;

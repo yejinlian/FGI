@@ -236,7 +236,8 @@
                             </div>
                         </div>
                         
-                        <div class="tools" id="flex_tools">
+                        <div class="tools" id="flex_tools" style="position: relative;">
+                           
                         </div>
                         <!-- <div class="props" id="flex_props">
                             <div class="pv5">
@@ -1321,9 +1322,15 @@
             });
         }
     }
+    /**
+     * 关闭模板二次删除确认框
+    */
     function lkrFrameDelClose(){
         $('#lkrFrameDel').fadeToggle(500)
     }
+    /**
+     * 关闭新建参数模板框
+    */
     function lkrFrameClose(){
         reseAddMb()
         $('#lkrFrame').fadeToggle(500)
