@@ -1099,6 +1099,7 @@ var Topology = {
                             let nodeId = data.id
                             if(nodeId.indexOf('模板') != -1){
                                 alert('新建算子')
+                                $("#suanfaType").css('display', "block");
                             }
                             
                             locked = data.locked;

@@ -180,3 +180,40 @@
     line-height: 32px;
     margin-right: 15px;
 }
+#suanfaType{
+    position: fixed;
+    z-index: 999;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: none;
+}
+#suanfaType div{
+    width: 200px;
+    margin: 0 auto;
+    position: relative;
+    top: 150px;
+    z-index: 3px;
+}
+#suanfaType div select{
+    margin: 0 auto;
+    text-align: center;
+    width: 100%;
+    height: 44px;
+}
+.frame-foot{
+    position: absolute;
+    bottom: 80px;
+    right: 80px;
+}
+.frame-foot .button{
+    font-size: 12px;
+    display: inline-block;
+    padding: 5px 15px;
+    background-image: url(./static/botton.png);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    color: #00beff;
+    cursor: pointer;
+    border-radius: 3px;
+}
