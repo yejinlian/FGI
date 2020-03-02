@@ -320,10 +320,19 @@
                                     <div class="canvas" id="topo_canvas"></div>
                                     
                                 </div>
-                                <div class="lkr-msg">
-                                    <div class="lkr-msg-div">
-                                        <div class="lkr-msg-div-tilte">
-                                            信息输出区
+                            </div>
+                        </div>
+                        
+                        <div class="tools" id="flex_tools" style="position: relative;">
+                           
+                        </div>
+                        <!-- <div class="props" id="flex_props">
+                            <div class="pv5">
+                                <div id="flex_props_home">
+                                    <div style="bottom:.2rem">
+                                        <div class="sub-title"
+                                             style="margin-left: 20px;font-weight: bold;margin-top: 10px">
+                                            小提示
                                         </div>
                                         <ul>
                                             <li>输出结果1</li>
@@ -1496,9 +1505,15 @@
             });
         }
     }
+    /**
+     * 关闭模板二次删除确认框
+    */
     function lkrFrameDelClose(){
         $('#lkrFrameDel').fadeToggle(500)
     }
+    /**
+     * 关闭新建参数模板框
+    */
     function lkrFrameClose(){
         reseAddMb()
         $('#lkrFrame').fadeToggle(500)

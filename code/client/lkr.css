@@ -5,6 +5,31 @@ body{
     width: 100%;
     height: 100%;
 }
+.algorithmFoot{
+    width: 100%;
+    display: flex;
+    position: absolute;
+    bottom: 0px;
+    height: 5%;
+}
+.algorithmFoot>div{
+    width: 50%;
+
+    cursor: pointer;
+    color: #ebeef8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #00beff;
+}
+.lkr-page{
+    height: 85%;
+    overflow-y: auto;
+}
+.algorithmTilte{
+    width:75%;
+    margin: auto;
+}
 .lkr-frame{
     position: fixed;
     z-index: 999;
@@ -221,7 +246,7 @@ body{
     align-items: center;
     justify-content: space-around;
 }
-::-webkit-scrollbar {display:none}
+/* ::-webkit-scrollbar {display:none} */
 .lkr-arrow{
     user-select: none;
     cursor: pointer;
