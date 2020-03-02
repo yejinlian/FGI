@@ -21,6 +21,7 @@ $(function(){
         getAllData('/operatorMaintenance/getAllAlgorithm',{id:'id',name:'algorithmname'},'算子',{username:null})
     })
     function getAllData(url,datas,type,param){
+        debugger
         $.ajax({
             url:urlConfig.host+url,
             data:param,
