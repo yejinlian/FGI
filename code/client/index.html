@@ -51,6 +51,7 @@
     <script src="./plugins/bootstrap/3.3.5/bootstrap.min.js"></script>
     <script src="./plugins/jquery/3.3.1/jquery-3.3.1.min.js"></script>
     <script src="./topology/formula.js"></script>
+      <script src="./topology/formula.js"></script>
     <script>
         $(function() {
             var content = "";
@@ -102,6 +103,7 @@
         Preview.callback.autoReset = true;  
         Preview.Init();
         Preview.Update();
+        
         $("#MathInput").on("input", function(val) {
             content = "$"+$(this).val()+"$";
             let contentVal = $(this).val()
@@ -116,22 +118,27 @@
                    data = window.formula(data);
                     let  str = ''
                     data.map(item => {
-                        str +=`<div>
-                                <div class="width-100">
+                        str +=`<div class="MathJaxParam">
+                                <div class="width-30">
                                     <span>变量</span>
-                                    <input type="text" :disabled="true" value="${item}">
+                                    <input type="text" :disabled="true" value="${item}" class="MathJaxInput1">
                                 </div>
-                                <div class="width-100 width-select">
+                                <div class="width-30 width-select">
                                     <span>类型</span>
-                                    <select placeholder="请选择">
+                                    <select id="selectId" onchange="gradeChange()" class="MathJaxInput2">
+                                        <option value="">请选择</option>
                                         <option value="0">常量</option>
                                         <option value="1">数据项</option>
                                         <option value="2">其他模块计算结果</option>
                                     </select>
                                 </div>
-                                <div class="width-100"> 
+                                <div class="width-30"> 
                                         <span>取值</span>
-                                        <input type="text">
+                                        <input type="text" class="MathJaxInput3">
+                                </div>
+                                <div class="width-100"> 
+                                        <span>描述</span>
+                                        <input type="text" class="MathJaxInput4">
                                 </div>
                             </div>`                       
                     })
@@ -145,11 +152,14 @@
 <body>
     <div id="suanfaType">
         <div>
-            <select placeholder="选择算子类型" >
+            <select placeholder="选择算子类型" id="formulaType">
                 <option value="0" >请选择算子类型</option>
                 <option value="1" >算法公式</option>
                 <option value="2">逻辑运算</option>
             </select>
+            <div>
+                <button onclick="selectFormula()">确定</button>
+            </div>
         </div>
     </div>
     <div class="Frame">
@@ -158,19 +168,23 @@
             <span onclick="FrameClose()" style="cursor: pointer;">X</span>
         </div>
         <div class="form-group">
+                <div>
+                    <span class="form-span">算子名称</span>
+                    <input class="form-input" type="text" id="algorithmname">
+                </div>
             <div>
-                <span class="form-input">公式编辑</span>
+                <span class="form-span">公式编辑</span>
                 <input id="MathInput" onblur="Preview.Update()" type="text">
             </div>
                 <div>
-                    <span  class="form-input">公式预览</span>
+                    <span  class="form-span">公式预览</span>
                     <div id="MathPreview" ></div>
                     <div id="MathBuffer" style="font-size: 20px;visibility:hidden; position:absolute; top:0; left: 0;margin: 0 auto;"></div>
                 </div>
 
         </div>
-        <div class="MathJaxEdit">
-        </div>
+        <div class="form-group MathJaxEdit">
+        </div>     
         <div class="frame-foot">
             <div class="button" onclick='ConfirmFrame()'>确定</div>
         </div>
@@ -200,6 +214,24 @@
             <div class="button" onclick='ConfirmLogic()'>确定</div>
         </div>
     </div>
+    <div class="lkr-frame" id='lkrAlgorithm'>
+            <div class="lkr-frame-div" style="height: 150px;">
+                <!-- <div class="lkr-frame-tilte">
+                    删除
+                    <span style="cursor: pointer;" onclick='lkrFrameDelClose()'>x</span>
+                </div> -->
+                <div class="lkr-frame-content">
+                    <h3>
+                        确认删除?
+                    </h3>
+                    
+                </div>
+                <div class="lkr-frame-foot">
+                    <div class="lkr-button" onclick='ConfirmDelAlgorithm()' style="margin-right: 10px;">确定</div>
+                    <div class="lkr-button" onclick='lkrFrameDelClose()'>取消</div>
+                </div>
+            </div>
+        </div>
     <div class="lkr-frame" id='lkrFrameDel'>
         <div class="lkr-frame-div" style="height: 150px;">
             <!-- <div class="lkr-frame-tilte">
@@ -1363,6 +1395,8 @@
 <script src='./index.js'></script>
 <!-- <script src='./LogicMath.js'></script> -->
 <script src="topology/topology_es5.js"></script>
+<script src="topology/MathJax.js"></script>
+
 <script>
     window.bigData = {
         mouldParam:[],
@@ -1370,31 +1404,9 @@
         delmoduleId:'',
         editmoduleId:'',
         frameType:'add',
-        editmoduledata:[]
-    }
-    $('#MathJaxOpen').on('click',function(){
-        $(".Frame").attr("style","display:block;");
-    })
-    // $('#LogicOpen').on('click',function(){
-    //     $(".Logic").attr("style","display:block;");
-    // })
-    function FrameClose(){
-        $(".Frame").attr("style","display:none;");
-    }
-    function LogicClose(){
-        $(".Logic").attr("style","display:none;");
-    }
-    document.querySelector('select').onchange = function(){
-       if(this.value == 1){
-            $(".Logic").attr("style","display:none;");
-            $(".Frame").attr("style","display:block;");          
-            $("#suanfaType").css('display', "none");
-       }
-       if(this.value == 2){
-            $(".Frame").attr("style","display:none;");
-            $(".Logic").attr("style","display:block;");
-            $("#suanfaType").css('display', "none");
-       }
+        editmoduledata:[],
+        delAlgorithmId:'',
+        editAlgorithmId:''
     }
     $('body').on('click','.lkr-list-edit',(e) => {
         window.bigData.frameType = 'edit'
@@ -1432,6 +1444,7 @@
             }
         })
     })
+  
     function addFrame(){
         window.bigData.frameType = 'add'
         // copnsole
@@ -1688,6 +1701,19 @@
                     window.bigData.delmoduleId = ''
                     reseTabsList()
                     $('#lkrFrameDel').fadeToggle(500)
+                }
+            }
+        })
+    }
+    //删除算子
+    function ConfirmDelAlgorithm(){
+        $.ajax({
+            url:urlConfig.host+'/operatorMaintenance/delAlgorithmById',
+            data:{algthId:window.bigData.delAlgorithmId},
+            success: function(data) {
+                if(data){
+                    window.bigData.delAlgorithmId = ''
+                    $('#lkrAlgorithm').fadeToggle(500)
                 }
             }
         })

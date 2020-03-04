@@ -21,7 +21,6 @@ $(function(){
         getAllData('/operatorMaintenance/getAllAlgorithm',{id:'id',name:'algorithmname'},'算子',{username:null})
     })
     function getAllData(url,datas,type,param){
-        debugger
         $.ajax({
             url:urlConfig.host+url,
             data:param,
@@ -31,7 +30,8 @@ $(function(){
                     window.addAlgorithm({
                         name: 'rectangle',
                         icon: 'icon-rectangle',
-                        id:item[datas.id]+type,
+                        id:item[datas.id],
+                        type:type,
                         data: {
                             id:item[datas.id]+type,
                             text: item[datas.name],
@@ -108,6 +108,16 @@ $(function(){
     $('body').on('click','.lkr-list-del',(e) => {
         window.bigData.delmoduleId = $(e.target).data('id')
         $('#lkrFrameDel').fadeToggle(500)
+    })
+    $('body').on('click','.lkr-list-delAlgorithm',(e) => {
+        debugger
+        window.bigData.delAlgorithmId = $(e.target).data('id')
+        $('#lkrAlgorithm').fadeToggle(500)
+    })
+    $('body').on('click','.lkr-list-editAlgorithm',(e) => {
+        debugger
+        window.bigData.editAlgorithmId = $(e.target).data('id')
+        $('.Frame').fadeToggle(500)
     })
 })
 

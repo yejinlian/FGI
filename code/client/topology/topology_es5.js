@@ -916,10 +916,22 @@ var Topology = {
         });
     },
     addAlgorithm(option){
-        $("#algorithmMde").append(`<div class="left-list" ondragstart="onDragStart(event,${JSON.stringify(option).replace(/\"/g, "'")})" draggable="true">
-            <div class="left-list-tilte">${option.data.text}</div>
-          
-        </div>`);
+        if(option.type=="模板"){
+            $("#algorithmMde").append(`<div class="left-list" ondragstart="onDragStart(event,${JSON.stringify(option).replace(/\"/g, "'")})" draggable="true">
+                <div class="left-list-tilte">${option.data.text}</div>
+               
+            </div>`);
+        }
+        if(option.type == "算子"){
+            $("#algorithmMde").append(`<div class="left-list" ondragstart="onDragStart(event,${JSON.stringify(option).replace(/\"/g, "'")})" draggable="true">
+                <div class="left-list-tilte">${option.data.text}</div>
+                <div class="left-list-event">
+                    <div class='lkr-list-editAlgorithm lkr-edit' data-id='${option.id}' >编辑算子</div>
+                    <div class='lkr-list-delAlgorithm lkr-del' data-id='${option.id}' >删除算子</div>
+                </div>
+            </div>`);
+        }
+       
     },
     addModel(option){
         
