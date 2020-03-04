@@ -39,8 +39,8 @@
         })
         }
     }
+    //提交算子信息及公式编辑
     function ConfirmFrame(){
-
         let tableAl ={
             algorithmauthor:"111",
             algorithmfun:$('#MathInput').val(),
