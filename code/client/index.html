@@ -50,6 +50,7 @@
     <script type="text/javascript" src="./MathJax/MathJax.js?config=TeX-MML-AM_HTMLorMML"></script>
     <script src="./plugins/bootstrap/3.3.5/bootstrap.min.js"></script>
     <script src="./plugins/jquery/3.3.1/jquery-3.3.1.min.js"></script>
+    <script src="./topology/formula.js"></script>
     <script>
         $(function() {
             var content = "";
@@ -100,8 +101,10 @@
         Preview.callback = MathJax.Callback(["CreatePreview",Preview]);
         Preview.callback.autoReset = true;  
         Preview.Init();
+        Preview.Update();
         $("#MathInput").on("input", function(val) {
             content = "$"+$(this).val()+"$";
+            let contentVal = $(this).val()
             Preview.Update();
             $.ajax({
                 type:"get",   
@@ -110,10 +113,9 @@
                     target:$(this).val()
                 },
                 success: function(data) {
-                    console.log(data)
+                   data = window.formula(data);
                     let  str = ''
                     data.map(item => {
-                       
                         str +=`<div>
                                 <div class="width-100">
                                     <span>变量</span>
@@ -300,8 +302,8 @@
                                 <li><span id="down_add">新建算法工程</span></li>
                                 <li><span id="canvas_open">打开算法工程</span></li>
                                 <li><span id="canvas_save">保存算法工程</span></li>
-                                <!-- <li><span id="MathJaxOpen">公式编辑</span></li>
-                                <li><span id="LogicOpen">逻辑运算</span></li> -->
+                                <li><span id="MathJaxOpen">公式编辑</span></li>
+                                <li><span id="LogicOpen">逻辑运算</span></li>
                                 <!-- <li><a href="#" id="down_png">下载PNG</a></li>
                                 <li><a href="#" id="canvas_title">标题</a></li> -->
                             </ul>
@@ -1370,9 +1372,9 @@
         frameType:'add',
         editmoduledata:[]
     }
-    // $('#MathJaxOpen').on('click',function(){
-    //     $(".Frame").attr("style","display:block;");
-    // })
+    $('#MathJaxOpen').on('click',function(){
+        $(".Frame").attr("style","display:block;");
+    })
     // $('#LogicOpen').on('click',function(){
     //     $(".Logic").attr("style","display:block;");
     // })
